@@ -29,12 +29,14 @@ let viewMode      = 'aperte';   // 'aperte' | 'risolte'
 //  MAPPA INIT
 // ─────────────────────────────────────────────────────────
 function initMap() {
-  map = L.map('map', { zoomControl: true }).setView(
+  map = L.map('map', { zoomControl: true, maxZoom: 20 }).setView(
     [MAP_DEFAULT.lat, MAP_DEFAULT.lng], MAP_DEFAULT.zoom
   );
+  new L.Hash(map);
 
   const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 20
   });
 
   const satelliteLayer = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
