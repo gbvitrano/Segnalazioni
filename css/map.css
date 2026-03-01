@@ -4,13 +4,13 @@
    ═══════════════════════════════════════════════════════ */
 
 :root {
-  --ink:    #1a1208;
+  --ink:    #3d2f1e;      /* warm dark brown — no black */
   --paper:  #f5f0e8;
   --amber:  #d4820a;
   --sage:   #3d5a47;
   --rust:   #c0392b;
   --mist:   #e8e2d6;
-  --shadow: rgba(26,18,8,0.12);
+  --shadow: rgba(60,40,20,0.12);
   --panel:  320px;
 
   /* Colori urgenza segnalazioni */
@@ -33,14 +33,15 @@ body {
 
 /* ── HEADER ──────────────────────────────────────────── */
 header {
-  background: var(--ink);
-  color: var(--paper);
+  background: white;
+  color: var(--ink);
   padding: 0.9rem 1.5rem;
   display: flex;
   align-items: center;
   gap: 1rem;
   z-index: 200;
   flex-shrink: 0;
+  box-shadow: 0 1px 0 rgba(60,40,20,0.10), 0 2px 12px rgba(60,40,20,0.07);
 }
 
 .logo-mark {
@@ -53,17 +54,19 @@ header {
   justify-content: center;
   font-size: 1rem;
   flex-shrink: 0;
+  color: white;
 }
 
 header h1 {
   font-family: 'Fraunces', serif;
   font-size: 1.2rem;
   font-weight: 600;
+  color: var(--ink);
 }
 
 header p {
   font-size: 0.75rem;
-  color: #a8a090;
+  color: #9a8f80;
   font-weight: 300;
 }
 
@@ -82,7 +85,7 @@ header p {
   padding: 0.5rem 1rem;
   font-size: 0.82rem;
   font-family: 'DM Sans', sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
@@ -91,27 +94,26 @@ header p {
 
 .btn-report:hover { background: #b8700a; }
 
-.btn-resolve { background: var(--sage); }
+.btn-resolve { background: var(--sage); color: white; border: none; }
 .btn-resolve:hover { background: #2d4435; }
 
 /* ── INFO BUTTON ─────────────────────────────────────── */
 .btn-info {
   background: none;
-  border: 1px solid rgba(255,255,255,0.25);
+  border: 1px solid rgba(60,40,20,0.20);
   border-radius: 50%;
   width: 32px;
   height: 32px;
-  color: var(--paper);
+  color: #9a8f80;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.95rem;
-  opacity: 0.7;
-  transition: opacity 0.2s, border-color 0.2s, color 0.2s;
+  transition: border-color 0.2s, color 0.2s;
   flex-shrink: 0;
 }
-.btn-info:hover { opacity: 1; border-color: var(--amber); color: var(--amber); }
+.btn-info:hover { border-color: var(--amber); color: var(--amber); }
 
 /* ── OVERLAY / MODAL GENERICO ────────────────────────── */
 .info-overlay {
@@ -644,8 +646,8 @@ header p {
 
 /* ── FOOTER ──────────────────────────────────────────── */
 footer {
-  background: var(--ink);
-  color: rgba(245,240,232,0.45);
+  background: #2c4a38;
+  color: rgba(245,240,232,0.55);
   font-size: 0.67rem;
   padding: 0.32rem 1.2rem;
   display: flex;
@@ -653,14 +655,14 @@ footer {
   gap: 0.9rem;
   flex-wrap: wrap;
   flex-shrink: 0;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid rgba(255,255,255,0.08);
   z-index: 50;
 }
 
-footer strong { color: var(--paper); }
-footer a { color: var(--amber); text-decoration: none; }
-footer a:hover { text-decoration: underline; }
-.footer-sep { opacity: 0.3; }
+footer strong { color: rgba(245,240,232,0.9); }
+footer a { color: #f0b04a; text-decoration: none; }
+footer a:hover { text-decoration: underline; color: #fcc96e; }
+.footer-sep { opacity: 0.25; }
 .footer-right { margin-left: auto; }
 
 /* ── STATS OVERLAY (iframe modal) ───────────────────── */
