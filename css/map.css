@@ -12,6 +12,11 @@
   --mist:   #e8e2d6;
   --shadow: rgba(26,18,8,0.12);
   --panel:  320px;
+
+  /* Colori urgenza segnalazioni */
+  --urg-alta:    #e53535;
+  --urg-normale: #ff9900;
+  --urg-bassa:   #f0c040;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -387,9 +392,9 @@ header p {
 
 .chip:hover              { border-color: var(--amber); }
 .chip.active             { background: var(--ink);  color: white; border-color: var(--ink);  }
-.chip.chip-alta.active   { background: var(--rust); color: white; border-color: var(--rust); }
-.chip.chip-normale.active{ background: var(--amber);color: white; border-color: var(--amber);}
-.chip.chip-bassa.active  { background: var(--sage); color: white; border-color: var(--sage); }
+.chip.chip-alta.active   { background: var(--urg-alta);    color: white; border-color: var(--urg-alta);    }
+.chip.chip-normale.active{ background: var(--urg-normale); color: white; border-color: var(--urg-normale); }
+.chip.chip-bassa.active  { background: var(--urg-bassa);   color: var(--ink); border-color: var(--urg-bassa); }
 
 /* ── LISTA SEGNALAZIONI ──────────────────────────────── */
 .report-list { flex: 1; padding: 0.8rem; }
@@ -423,9 +428,9 @@ header p {
   flex-shrink: 0;
   margin-top: 4px;
 }
-.urgency-dot.alta   { background: var(--rust); }
-.urgency-dot.normale{ background: var(--amber); }
-.urgency-dot.bassa  { background: var(--sage); }
+.urgency-dot.alta   { background: var(--urg-alta); }
+.urgency-dot.normale{ background: var(--urg-normale); }
+.urgency-dot.bassa  { background: var(--urg-bassa); }
 
 .ri-addr {
   font-size: 0.72rem;

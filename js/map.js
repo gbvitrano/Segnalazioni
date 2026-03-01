@@ -262,7 +262,7 @@ function updateStats() {
   document.getElementById('statRes').textContent  = res;
 }
 
-const URGENCY_COLORS = { Alta: '#c0392b', Normale: '#d4820a', Bassa: '#3d5a47' };
+const URGENCY_COLORS = { Alta: '#e53535', Normale: '#ff9900', Bassa: '#f0c040' };
 
 function makeMarkerIcon(urgenza, stato) {
   if (stato === 'Risolta') {
@@ -317,7 +317,7 @@ function makePopupHTML(r) {
   html += `<div class="popup-row"><span>📅</span><span>${r.Data} ${r.Ora || ''}</span></div>`;
   html += `<div class="popup-row">
     <span style="color:${urgColor};font-weight:600">${
-      r.Urgenza === 'Alta' ? '🔴' : r.Urgenza === 'Bassa' ? '🟢' : '🟡'
+      r.Urgenza === 'Alta' ? '🔴' : r.Urgenza === 'Bassa' ? '🟡' : '🟠'
     } ${r.Urgenza}</span>
     <span style="margin-left:0.5rem">${makeStatoBadge(r.Stato)}</span>
   </div>`;
