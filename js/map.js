@@ -354,10 +354,14 @@ function renderList() {
     return;
   }
 
-  list.innerHTML = filteredReports.map(r => {
+  list.innerHTML = '';
+  filteredReports.forEach(r => {
     const addrShort = r.Via || r.Comune || r.Indirizzo_Completo || 'Posizione non specificata';
     const urg = (r.Urgenza || 'Normale').toLowerCase();
-    return `<div class="report-item" id="ri-${r.ID_Segnalazione}" onclick="focusReport('${r.ID_Segnalazione}')">
+    const el = document.createElement('div');
+    el.className = 'report-item';
+    el.id = 'ri-' + r.ID_Segnalazione;
+    el.innerHTML = `
       <div class="ri-top">
         <span class="ri-emoji">${r.Categoria_Emoji || '📌'}</span>
         <span class="ri-cat">${r.Categoria}</span>
@@ -367,23 +371,25 @@ function renderList() {
       <div class="ri-meta">
         <span class="ri-date">${r.Data || ''}</span>
         ${makeStatoBadge(r.Stato)}
-      </div>
-    </div>`;
-  }).join('');
+      </div>`;
+    el.addEventListener('click', () => focusReport(r.ID_Segnalazione));
+    list.appendChild(el);
+  });
 }
 
 function focusReport(id) {
   const report = filteredReports.find(r => r.ID_Segnalazione === id);
   if (!report) return;
 
+  highlightListItem(id);
+
   const lat = parseFloat(report.Lat);
   const lng = parseFloat(report.Long);
-  if (!isNaN(lat) && !isNaN(lng)) {
-    map.setView([lat, lng], 17, { animate: true });
-    const m = markerById[id];
-    if (m) setTimeout(() => m.openPopup(), 250);
-  }
-  highlightListItem(id);
+  if (isNaN(lat) || isNaN(lng)) return;
+
+  const m = markerById[id];
+  if (m) map.once('moveend', () => m.openPopup());
+  map.setView([lat, lng], 17, { animate: true });
 }
 
 function highlightListItem(id) {
