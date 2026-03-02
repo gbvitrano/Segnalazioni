@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://segnalaora.coseerobe.it/" />
+<meta name="description" content="Segnala in modo semplice e georeferenziato i problemi del tuo territorio. Un progetto civico basato su opendata per migliorare la comunicazione tra cittadini e pubblica amministrazione." />
+    <meta name="author" content="Giovan Battista Vitrano per OpenDataSicilia.it">
+    <meta http-equiv="content-language" content="IT">
+    <meta name="robots" content="index,follow">
+    <meta name="creation_Date" content="01/03/2026>
+<title>SegnalaOra — Mappa Segnalazioni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet-hash@0.2.1/leaflet-hash.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+<link rel="stylesheet" href="css/map.css">
+    <link rel="shortcut icon" href="img/favicon.ico"/>
+    <link rel="icon" href="img/favicon.png" type="image/png"/>
+<script src="js/theme.js"></script> 
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-87653723-4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-87653723-4');
+    </script>
+
+    <!-- Open Graph / Facebook -->
+<meta property="og:type"              content="website" />
+<meta property="og:url"               content="https://segnalaora.coseerobe.it/" />
+<meta property="og:site_name"         content="SegnalaOra – Cose&Robe" />
+<meta property="og:title"             content="SegnalaOra | Segnala un problema sul tuo territorio" />
+<meta property="og:description"       content="Segnala in modo semplice e georeferenziato i problemi del tuo territorio. Un progetto civico basato su opendata per migliorare la comunicazione tra cittadini e pubblica amministrazione." />
+<meta property="og:image"             content="https://segnalaora.coseerobe.it/img/og-image.jpg" />
+<meta property="og:image:width"       content="1200" />
+<meta property="og:image:height"      content="630" />
+<meta property="og:image:alt"         content="SegnalaOra – mappa interattiva delle segnalazioni territoriali" />
+<meta property="og:locale"            content="it_IT" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card"             content="summary_large_image" />
+<meta name="twitter:site"             content="@gbvitrano" />
+<meta name="twitter:creator"          content="@gbvitrano" />
+<meta name="twitter:title"            content="SegnalaOra | Segnala un problema sul tuo territorio" />
+<meta name="twitter:description"      content="Segnala in modo semplice e georeferenziato i problemi del tuo territorio. Un progetto civico basato su opendata." />
+<meta name="twitter:image"            content="https://segnalaora.coseerobe.it/img/og-image.jpg" />
+<meta name="twitter:image:alt"        content="SegnalaOra – mappa interattiva delle segnalazioni territoriali" />
+
+
+
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">📍</div>
+  <div>
+    <h1>SegnalaOra</h1>
+    <p>Mappa segnalazioni civiche</p>
+  </div>
+  <div class="header-right">
+    <a href="segnalazione-civica.html" class="btn-report">+ Nuova segnalazione</a>
+    <button class="btn-report btn-resolve" onclick="openResolve('')">✅ <span class="btn-resolve-text">Segna risolta</span></button>
+    <button class="btn-info" onclick="openStats()" title="Statistiche">
+      <i class="fa-solid fa-chart-simple"></i>
+    </button>
+    <button class="btn-info" onclick="openInfo()" title="Informazioni sul progetto">
+      <i class="fa-solid fa-circle-info"></i>
+    </button>
+    <button class="btn-theme" id="themeToggle" onclick="toggleTheme()" title="Passa al tema scuro">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+  </div>
+</header>
+
+<!-- INFO MODAL -->
+<div class="info-overlay" id="infoOverlay" onclick="if(event.target===this)closeInfo()">
+  <div class="info-modal">
+    <button class="info-modal-close" onclick="closeInfo()" title="Chiudi">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <h2>📍 SegnalaOra</h2>
+    <p><strong>SegnalaOra</strong> è uno strumento open source per segnalare problemi del territorio al proprio Comune: buche stradali, rifiuti abbandonati, illuminazione pubblica guasta, verde incurato e molto altro.</p>
+    <p><strong>Come funziona:</strong></p>
+    <ol>
+      <li>Carica una foto del problema — il GPS viene estratto automaticamente dall'immagine</li>
+      <li>Indica la posizione sulla mappa, oppure lascia che il GPS del dispositivo la rilevi</li>
+      <li>Descrivi il problema, scegli la categoria e il livello di urgenza</li>
+      <li>Invia la segnalazione al Comune e condividila su WhatsApp, Twitter o Facebook</li>
+    </ol>
+    <p>Tutte le segnalazioni sono archiviate automaticamente in Google Sheets e visibili su questa mappa pubblica.</p>
+
+    <p><strong>Come segnalare una risoluzione:</strong></p>
+    <ol>
+      <li>Clicca il pulsante <strong>✅ Segna risolta</strong> in alto a destra</li>
+      <li>Incolla il codice UUID ricevuto via email nella casella di testo</li>
+      <li>Clicca <em>Conferma risoluzione</em> — lo stato sarà aggiornato entro pochi minuti</li>
+    </ol>
+    <p style="font-size:0.83rem;color:#777">Il codice di risoluzione è incluso nell'email inviata alla PA al momento della segnalazione.</p>
+
+    <div class="credits">
+      <strong>Idea di</strong> Andrea Borruso, Salvatore Fiandaca, Ciro Spataro e Giovan Battista Vitrano<br>
+      By <a href="https://opendatasicilia.it" target="_blank" rel="noopener">@opendatasicilia</a><br><br>
+      <strong>Sviluppo tecnico</strong><br>
+      Web app sviluppata attraverso una collaborazione human–Claude AI (Anthropic), che ha supportato la progettazione dell'architettura modulare, l'ottimizzazione del codice e l'implementazione di funzionalità avanzate di visualizzazione geospaziale.
+    </div>
+  </div>
+</div>
+
+<!-- MODAL RISOLUZIONE (aperto via ?risolvi=TOKEN nell'URL) -->
+<div class="info-overlay" id="resolveOverlay" onclick="if(event.target===this)closeResolve()">
+  <div class="info-modal" style="max-width:420px">
+    <button class="info-modal-close" onclick="closeResolve()" title="Chiudi">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <h2 style="color:var(--sage)">✅ Segna come risolta</h2>
+    <p>Incolla il codice di risoluzione ricevuto via email:</p>
+    <input class="resolve-id-box" id="resolveIdDisplay" type="text"
+      placeholder="Es. 550e8400-e29b-41d4-a716-446655440000"
+      autocomplete="off" spellcheck="false"
+      onkeydown="if(event.key==='Enter')confirmResolve()">
+    <p style="font-size:0.82rem;color:#777;margin-bottom:1rem">
+      Questa azione aggiorna lo stato nel sistema. La segnalazione sarà visibile nella sezione <em>Risolte</em> entro 1–3 minuti.
+    </p>
+    <button class="resolve-confirm-btn" id="resolveConfirmBtn" onclick="confirmResolve()">
+      ✅ Conferma risoluzione
+    </button>
+    <div class="resolve-result" id="resolveResult"></div>
+  </div>
+</div>
+
+<!-- STATS MODAL (iframe) -->
+<div class="stats-overlay" id="statsOverlay" onclick="if(event.target===this)closeStats()">
+  <div class="stats-iframe-wrap">
+    <button class="stats-close-btn" onclick="closeStats()" title="Chiudi">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <iframe id="statsFrame" src="" frameborder="0" title="Statistiche SegnalaOra"></iframe>
+  </div>
+</div>
+
+<!-- LIGHTBOX IMMAGINE -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()" title="Chiudi">&#x2715;</button>
+  <img id="lightboxImg" src="" alt="Immagine segnalazione" onclick="event.stopPropagation()">
+</div>
+
+<div class="app-body">
+
+  <!-- PANNELLO -->
+  <div class="side-panel">
+    <div class="panel-header">
+      <div class="stats-row">
+        <div class="stat-box">
+          <span class="stat-num" id="statTot">—</span>
+          <span class="stat-lbl">Totali</span>
+        </div>
+        <div class="stat-box urgent">
+          <span class="stat-num" id="statWait">—</span>
+          <span class="stat-lbl">Aperte</span>
+        </div>
+        <div class="stat-box resolved">
+          <span class="stat-num" id="statRes">—</span>
+          <span class="stat-lbl">Risolte</span>
+        </div>
+      </div>
+
+      <div class="view-tabs">
+        <button class="view-tab active" id="tabAperte"  onclick="setViewMode('aperte')">📍 Aperte</button>
+        <button class="view-tab"        id="tabRisolte" onclick="setViewMode('risolte')">✅ Risolte</button>
+      </div>
+
+      <div class="filters" id="filtersPanel">
+        <span class="filter-label">Urgenza</span>
+        <div class="filter-chips" id="urgFilter">
+          <button type="button" class="chip active"       data-val="all"     onclick="setFilter('urgenza','all',this)">Tutte</button>
+          <button type="button" class="chip chip-alta"    data-val="Alta"    onclick="setFilter('urgenza','Alta',this)">🔴 Alta</button>
+          <button type="button" class="chip chip-normale" data-val="Normale" onclick="setFilter('urgenza','Normale',this)">🟠 Normale</button>
+          <button type="button" class="chip chip-bassa"   data-val="Bassa"   onclick="setFilter('urgenza','Bassa',this)">🔵 Bassa</button>
+        </div>
+
+        <span class="filter-label">Stato</span>
+        <div class="filter-chips" id="statoFilter">
+          <button type="button" class="chip active" data-val="all"            onclick="setFilter('stato','all',this)">Tutti</button>
+          <button type="button" class="chip"        data-val="Nuova"          onclick="setFilter('stato','Nuova',this)">Nuova</button>
+          <button type="button" class="chip"        data-val="In lavorazione" onclick="setFilter('stato','In lavorazione',this)">In lavorazione</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="report-list-header">Segnalazioni Recenti</div>
+    <div class="report-list" id="reportList">
+      <div class="no-results">Caricamento segnalazioni...</div>
+    </div>
+  </div>
+
+  <!-- MAPPA -->
+  <div id="map"></div>
+
+  <!-- CTA mobile (nascosta su desktop) -->
+  <a href="segnalazione-civica.html" class="mobile-cta">
+    📷 NUOVA SEGNALAZIONE
+  </a>
+
+  <!-- LEGENDA -->
+  <div class="legend">
+    <div class="legend-title">Urgenza</div>
+    <div class="legend-row"><div class="legend-dot" style="background:#e53535"></div> Alta</div>
+    <div class="legend-row"><div class="legend-dot" style="background:#ff9900"></div> Normale</div>
+    <div class="legend-row"><div class="legend-dot" style="background:#3cb4d8"></div> Bassa</div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <p>Caricamento segnalazioni...</p>
+  </div>
+
+</div><!-- /app-body -->
+
+<footer>
+  <span>📍 <strong>SegnalaOra</strong> — Segnalazioni civiche open source</span>
+  <span class="footer-sep">·</span>
+  <span>Dati: <a href="#" target="_blank" rel="noopener">Google Sheets</a></span>
+  <span class="footer-sep">·</span>
+  <span>Mappa: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap</a></span>
+  <span class="footer-sep">·</span>
+  <span>By <a href="https://opendatasicilia.it" target="_blank" rel="noopener">@opendatasicilia</a></span>
+  <span class="footer-right">
+    <a href="#" target="_blank" rel="noopener">
+      <i class="fa-brands fa-github"></i> GitHub
+    </a>
+  </span>
+</footer>
+
+<script src="js/map.js"></script>
+
+<!-- BOTTOM NAV mobile (nascosta su desktop) -->
+<nav class="bottom-nav">
+  <button class="bnav-item bnav-active" type="button">
+    <i class="fa-solid fa-map-location-dot"></i>
+    <span>Mappa</span>
+  </button>
+  <a class="bnav-item" href="segnalazione-civica.html">
+    <i class="fa-solid fa-camera"></i>
+    <span>Segnala</span>
+  </a>
+  <button class="bnav-item" type="button" onclick="openStats()">
+    <i class="fa-solid fa-chart-simple"></i>
+    <span>Statistiche</span>
+  </button>
+  <button class="bnav-item" type="button" onclick="openInfo()">
+    <i class="fa-solid fa-circle-info"></i>
+    <span>Info</span>
+  </button>
+</nav>
+
+</body>
+</html>

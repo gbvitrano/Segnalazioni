@@ -8,19 +8,18 @@
     <meta name="author" content="Giovan Battista Vitrano per OpenDataSicilia.it">
     <meta http-equiv="content-language" content="IT">
     <meta name="robots" content="index,follow">
-    <meta name="creation_Date" content="01/03/2026>
-<title>SegnalaOra — Mappa Segnalazioni</title>
+    <meta name="creation_Date" content="01/03/2026">
+<title>SegnalaOra — Segnalazioni Civiche</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,800;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet-hash@0.2.1/leaflet-hash.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/exifr/dist/full.umd.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
-<link rel="stylesheet" href="css/map.css">
+<link rel="stylesheet" href="css/segnalazione-civica.css">
     <link rel="shortcut icon" href="img/favicon.ico"/>
     <link rel="icon" href="img/favicon.png" type="image/png"/>
-<script src="js/theme.js"></script> 
-
+<script src="js/theme.js"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-87653723-4"></script>
@@ -31,7 +30,7 @@
       gtag('config', 'UA-87653723-4');
     </script>
 
-    <!-- Open Graph / Facebook -->
+<!-- Open Graph / Facebook -->
 <meta property="og:type"              content="website" />
 <meta property="og:url"               content="https://segnalaora.coseerobe.it/" />
 <meta property="og:site_name"         content="SegnalaOra – Cose&Robe" />
@@ -52,8 +51,6 @@
 <meta name="twitter:image"            content="https://segnalaora.coseerobe.it/img/og-image.jpg" />
 <meta name="twitter:image:alt"        content="SegnalaOra – mappa interattiva delle segnalazioni territoriali" />
 
-
-
 </head>
 <body>
 
@@ -61,18 +58,13 @@
   <div class="logo-mark">📍</div>
   <div>
     <h1>SegnalaOra</h1>
-    <p>Mappa segnalazioni civiche</p>
   </div>
-  <div class="header-right">
-    <a href="segnalazione-civica.html" class="btn-report">+ Nuova segnalazione</a>
-    <button class="btn-report btn-resolve" onclick="openResolve('')">✅ <span class="btn-resolve-text">Segna risolta</span></button>
-    <button class="btn-info" onclick="openStats()" title="Statistiche">
-      <i class="fa-solid fa-chart-simple"></i>
-    </button>
+  <div class="header-actions">
+    <a href="index.html" class="btn-map-link">🗺 Mappa</a>
     <button class="btn-info" onclick="openInfo()" title="Informazioni sul progetto">
       <i class="fa-solid fa-circle-info"></i>
     </button>
-    <button class="btn-theme" id="themeToggle" onclick="toggleTheme()" title="Passa al tema scuro">
+    <button class="btn-theme" id="themeToggle" onclick="toggleTheme()" title="Tema">
       <i class="fa-solid fa-moon"></i>
     </button>
   </div>
@@ -89,20 +81,11 @@
     <p><strong>Come funziona:</strong></p>
     <ol>
       <li>Carica una foto del problema — il GPS viene estratto automaticamente dall'immagine</li>
-      <li>Indica la posizione sulla mappa, oppure lascia che il GPS del dispositivo la rilevi</li>
-      <li>Descrivi il problema, scegli la categoria e il livello di urgenza</li>
-      <li>Invia la segnalazione al Comune e condividila su WhatsApp, Twitter o Facebook</li>
+      <li>Verifica la posizione sulla mappa oppure lascia che il GPS del dispositivo la rilevi</li>
+      <li>Scegli a chi inviare, descrivi il problema e inserisci i tuoi dati</li>
+      <li>Invia la segnalazione al Comune — riceverai una conferma via email</li>
     </ol>
-    <p>Tutte le segnalazioni sono archiviate automaticamente in Google Sheets e visibili su questa mappa pubblica.</p>
-
-    <p><strong>Come segnalare una risoluzione:</strong></p>
-    <ol>
-      <li>Clicca il pulsante <strong>✅ Segna risolta</strong> in alto a destra</li>
-      <li>Incolla il codice UUID ricevuto via email nella casella di testo</li>
-      <li>Clicca <em>Conferma risoluzione</em> — lo stato sarà aggiornato entro pochi minuti</li>
-    </ol>
-    <p style="font-size:0.83rem;color:#777">Il codice di risoluzione è incluso nell'email inviata alla PA al momento della segnalazione.</p>
-
+    <p>Tutte le segnalazioni sono archiviate automaticamente in Google Sheets e visibili sulla mappa pubblica.</p>
     <div class="credits">
       <strong>Idea di</strong> Andrea Borruso, Salvatore Fiandaca, Ciro Spataro e Giovan Battista Vitrano<br>
       By <a href="https://opendatasicilia.it" target="_blank" rel="noopener">@opendatasicilia</a><br><br>
@@ -112,153 +95,164 @@
   </div>
 </div>
 
-<!-- MODAL RISOLUZIONE (aperto via ?risolvi=TOKEN nell'URL) -->
-<div class="info-overlay" id="resolveOverlay" onclick="if(event.target===this)closeResolve()">
-  <div class="info-modal" style="max-width:420px">
-    <button class="info-modal-close" onclick="closeResolve()" title="Chiudi">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-    <h2 style="color:var(--sage)">✅ Segna come risolta</h2>
-    <p>Incolla il codice di risoluzione ricevuto via email:</p>
-    <input class="resolve-id-box" id="resolveIdDisplay" type="text"
-      placeholder="Es. 550e8400-e29b-41d4-a716-446655440000"
-      autocomplete="off" spellcheck="false"
-      onkeydown="if(event.key==='Enter')confirmResolve()">
-    <p style="font-size:0.82rem;color:#777;margin-bottom:1rem">
-      Questa azione aggiorna lo stato nel sistema. La segnalazione sarà visibile nella sezione <em>Risolte</em> entro 1–3 minuti.
-    </p>
-    <button class="resolve-confirm-btn" id="resolveConfirmBtn" onclick="confirmResolve()">
-      ✅ Conferma risoluzione
-    </button>
-    <div class="resolve-result" id="resolveResult"></div>
-  </div>
-</div>
+<main>
 
-<!-- STATS MODAL (iframe) -->
-<div class="stats-overlay" id="statsOverlay" onclick="if(event.target===this)closeStats()">
-  <div class="stats-iframe-wrap">
-    <button class="stats-close-btn" onclick="closeStats()" title="Chiudi">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-    <iframe id="statsFrame" src="" frameborder="0" title="Statistiche SegnalaOra"></iframe>
-  </div>
-</div>
+  <!-- ① FOTO -->
+  <section class="form-section">
+    <div class="section-title">📷 Foto del problema</div>
+    <div class="photo-zone" id="photoZone" onclick="document.getElementById('fileInput').click()">
+      <input type="file" id="fileInput" accept="image/*">
+      <span class="big-icon">🖼️</span>
+      <h3>Tocca per scattare o scegliere</h3>
+      <p>JPG, PNG, HEIC · ridimensionata a 1280 px</p>
+    </div>
+    <div class="photo-preview" id="photoPreview">
+      <img id="previewImg" src="" alt="Anteprima">
+      <button class="change-btn" type="button" onclick="document.getElementById('fileInput').click()">✎ Cambia</button>
+    </div>
+    <div class="photo-info" id="photoInfo"></div>
+    <div class="btn-row" style="margin-top:0.8rem">
+      <button class="btn-sm" type="button" onclick="openCamera()">📷 Fotocamera</button>
+      <button class="btn-sm" type="button" onclick="openGallery()">🗂️ Galleria</button>
+    </div>
+  </section>
 
-<!-- LIGHTBOX IMMAGINE -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close" onclick="closeLightbox()" title="Chiudi">&#x2715;</button>
-  <img id="lightboxImg" src="" alt="Immagine segnalazione" onclick="event.stopPropagation()">
-</div>
-
-<div class="app-body">
-
-  <!-- PANNELLO -->
-  <div class="side-panel">
-    <div class="panel-header">
-      <div class="stats-row">
-        <div class="stat-box">
-          <span class="stat-num" id="statTot">—</span>
-          <span class="stat-lbl">Totali</span>
-        </div>
-        <div class="stat-box urgent">
-          <span class="stat-num" id="statWait">—</span>
-          <span class="stat-lbl">Aperte</span>
-        </div>
-        <div class="stat-box resolved">
-          <span class="stat-num" id="statRes">—</span>
-          <span class="stat-lbl">Risolte</span>
-        </div>
+  <!-- ② POSIZIONE -->
+  <section class="form-section form-section--geo">
+    <button class="geo-bar" type="button" id="geoStatus" onclick="toggleMap()" aria-expanded="false">
+      <div class="geo-bar-left">
+        <div class="dot"></div>
+        <span id="geoText">In attesa di posizione…</span>
       </div>
-
-      <div class="view-tabs">
-        <button class="view-tab active" id="tabAperte"  onclick="setViewMode('aperte')">📍 Aperte</button>
-        <button class="view-tab"        id="tabRisolte" onclick="setViewMode('risolte')">✅ Risolte</button>
+      <span class="geo-bar-caret">▾ Mappa</span>
+    </button>
+    <div class="map-collapsible" id="mapCollapsible">
+      <div class="exif-banner" id="exifBanner" style="display:none">
+        📸 <strong>Posizione estratta dalla foto (EXIF).</strong> Verifica che il marker corrisponda al luogo del problema. Se non è corretto, trascinalo nella posizione giusta.
+        <button class="exif-banner-btn" type="button" onclick="dismissExifBanner()">📡 Usa GPS del dispositivo invece</button>
       </div>
-
-      <div class="filters" id="filtersPanel">
-        <span class="filter-label">Urgenza</span>
-        <div class="filter-chips" id="urgFilter">
-          <button type="button" class="chip active"       data-val="all"     onclick="setFilter('urgenza','all',this)">Tutte</button>
-          <button type="button" class="chip chip-alta"    data-val="Alta"    onclick="setFilter('urgenza','Alta',this)">🔴 Alta</button>
-          <button type="button" class="chip chip-normale" data-val="Normale" onclick="setFilter('urgenza','Normale',this)">🟠 Normale</button>
-          <button type="button" class="chip chip-bassa"   data-val="Bassa"   onclick="setFilter('urgenza','Bassa',this)">🔵 Bassa</button>
-        </div>
-
-        <span class="filter-label">Stato</span>
-        <div class="filter-chips" id="statoFilter">
-          <button type="button" class="chip active" data-val="all"            onclick="setFilter('stato','all',this)">Tutti</button>
-          <button type="button" class="chip"        data-val="Nuova"          onclick="setFilter('stato','Nuova',this)">Nuova</button>
-          <button type="button" class="chip"        data-val="In lavorazione" onclick="setFilter('stato','In lavorazione',this)">In lavorazione</button>
-        </div>
+      <div id="map"></div>
+      <label>Indirizzo rilevato</label>
+      <input type="text" id="addressInput" placeholder="Via/Piazza, Numero Civico — Città">
+      <div class="btn-row">
+        <button class="btn-sm" type="button" onclick="getGPS()">📡 Usa GPS</button>
+        <button class="btn-sm" type="button" onclick="useExifGps()" id="btnExif" style="display:none">📸 Da foto EXIF</button>
       </div>
     </div>
+  </section>
 
-    <div class="report-list-header">Segnalazioni Recenti</div>
-    <div class="report-list" id="reportList">
-      <div class="no-results">Caricamento segnalazioni...</div>
+  <!-- ③ DESTINATARIO -->
+  <section class="form-section">
+    <div class="section-title">📤 A chi segnali?</div>
+    <div class="dest-grid" id="destGrid">
+      <!-- Popolato da JS da dati/destinatari.json -->
+    </div>
+    <button type="button" class="cat-expand-btn" id="destExpandBtn" onclick="toggleDestExpand()" style="display:none"></button>
+    <div class="custom-email-row" id="customEmailRow" style="display:none">
+      <label>Email destinatario</label>
+      <input type="email" id="customEmail" placeholder="ufficio@comune.it" oninput="onCustomEmailInput()">
+      <div class="field-error" id="customEmail-error">Inserisci un indirizzo email valido.</div>
+    </div>
+    <div class="field-error" id="dest-error">⚠️ Seleziona a chi inviare la segnalazione.</div>
+  </section>
+
+  <!-- ④ DETTAGLI -->
+  <section class="form-section">
+    <div class="section-title">📝 Urgenza e note</div>
+
+    <label>Urgenza</label>
+    <div class="select-wrap">
+      <select id="urgenza">
+        <option value="Normale">🟡 Normale</option>
+        <option value="Alta">🔴 Alta — pericolo immediato</option>
+        <option value="Bassa">🟢 Bassa — segnalazione informativa</option>
+      </select>
+    </div>
+
+    <label>Descrizione (opzionale)</label>
+    <textarea id="descr" placeholder="Es: La buca si trova all'angolo con Via Roma, è larga circa 40 cm…"></textarea>
+  </section>
+
+  <!-- ⑤ MITTENTE -->
+  <section class="form-section">
+    <div class="section-title">👤 I tuoi dati</div>
+
+    <label>Nome o Nickname *</label>
+    <input type="text" id="nome" placeholder="Il tuo nome o nickname" oninput="clearFieldError('nome')" required>
+    <div class="field-error" id="nome-error">Inserisci il tuo nome o nickname.</div>
+
+    <label>Email * <span class="label-note">(ricevi la conferma di invio)</span></label>
+    <input type="email" id="email" placeholder="tua@email.it" required
+      oninput="onEmailInput()"
+      onblur="validateEmailField()">
+    <div class="field-error" id="email-error">Inserisci un indirizzo email valido (es: nome@dominio.it).</div>
+  </section>
+
+  <!-- ⑥ INVIA -->
+  <section class="form-section form-section--send">
+    <button class="send-btn" id="sendBtn" type="button" onclick="sendReport()">
+      ✉️ Invia Segnalazione
+    </button>
+  </section>
+
+</main>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <span class="success-icon">✅</span>
+    <h2>Segnalazione inviata!</h2>
+    <p>Il tuo report è stato trasmesso. Riceverai una conferma via email. Conserva l'ID per seguire l'evoluzione.</p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-bottom:1.5rem;">
+      <div class="tag-id" id="ticketId" style="margin-bottom:0">SGN-000000</div>
+      <button id="copyIdBtn" type="button" onclick="copyTicketId()" title="Copia ID"
+        style="background:none;border:1px solid rgba(26,18,8,0.25);border-radius:6px;padding:0.3rem 0.6rem;cursor:pointer;font-size:0.8rem;font-family:'DM Sans',sans-serif;">
+        📋 Copia
+      </button>
+    </div>
+    <div class="token-row">
+      <span class="token-label">🔑 Token risoluzione:</span>
+      <span class="token-val" id="resolveToken">—</span>
+      <button id="copyTokenBtn" type="button" onclick="copyToken()" class="copy-btn-small" title="Copia token">📋 Copia</button>
+    </div>
+    <p class="token-hint">Conserva questo codice: serve alla PA per marcare la segnalazione come risolta.</p>
+    <div class="warn-banner" id="emailWarnBanner" style="display:none">
+      ⚠️ <strong>Nota:</strong> il messaggio email si apre nel tuo client di posta. Verifica di averlo inviato prima di chiudere.
+    </div>
+    <p id="successDetail" style="margin-bottom:0.5rem;"></p>
+    <div class="channels-sent" id="channelsSent"></div>
+    <div class="copy-reminder" id="copyReminder">
+      💡 Hai copiato il tuo ID segnalazione? Ne avrai bisogno per seguire l'evoluzione.
+      <button class="copy-reminder-close" type="button" onclick="forceClose()">Chiudi comunque</button>
+    </div>
+    <br>
+    <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+      <button class="btn-next" type="button" onclick="resetAll()" style="margin:0;">+ Nuova segnalazione</button>
+      <button type="button" onclick="closeSuccess()" style="margin:0;padding:0.75rem 1.5rem;border-radius:12px;border:1.5px solid rgba(26,18,8,0.25);background:transparent;font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:500;cursor:pointer;color:var(--ink);">✕ Chiudi</button>
     </div>
   </div>
+</div>
 
-  <!-- MAPPA -->
-  <div id="map"></div>
+<script src="js/segnalazione-civica.js"></script>
 
-  <!-- CTA mobile (nascosta su desktop) -->
-  <a href="segnalazione-civica.html" class="mobile-cta">
-    📷 NUOVA SEGNALAZIONE
-  </a>
-
-  <!-- LEGENDA -->
-  <div class="legend">
-    <div class="legend-title">Urgenza</div>
-    <div class="legend-row"><div class="legend-dot" style="background:#e53535"></div> Alta</div>
-    <div class="legend-row"><div class="legend-dot" style="background:#ff9900"></div> Normale</div>
-    <div class="legend-row"><div class="legend-dot" style="background:#3cb4d8"></div> Bassa</div>
-  </div>
-
-  <!-- LOADING -->
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="spinner"></div>
-    <p>Caricamento segnalazioni...</p>
-  </div>
-
-</div><!-- /app-body -->
-
-<footer>
-  <span>📍 <strong>SegnalaOra</strong> — Segnalazioni civiche open source</span>
-  <span class="footer-sep">·</span>
-  <span>Dati: <a href="#" target="_blank" rel="noopener">Google Sheets</a></span>
-  <span class="footer-sep">·</span>
-  <span>Mappa: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap</a></span>
-  <span class="footer-sep">·</span>
-  <span>By <a href="https://opendatasicilia.it" target="_blank" rel="noopener">@opendatasicilia</a></span>
-  <span class="footer-right">
-    <a href="#" target="_blank" rel="noopener">
-      <i class="fa-brands fa-github"></i> GitHub
-    </a>
-  </span>
-</footer>
-
-<script src="js/map.js"></script>
-
-<!-- BOTTOM NAV mobile (nascosta su desktop) -->
+<!-- BOTTOM NAV mobile -->
 <nav class="bottom-nav">
-  <button class="bnav-item bnav-active" type="button">
+  <a class="bnav-item" href="index.html">
     <i class="fa-solid fa-map-location-dot"></i>
     <span>Mappa</span>
-  </button>
-  <a class="bnav-item" href="segnalazione-civica.html">
+  </a>
+  <button class="bnav-item bnav-active" type="button">
     <i class="fa-solid fa-camera"></i>
     <span>Segnala</span>
-  </a>
-  <button class="bnav-item" type="button" onclick="openStats()">
+  </button>
+  <a class="bnav-item" href="statistiche.html">
     <i class="fa-solid fa-chart-simple"></i>
     <span>Statistiche</span>
-  </button>
+  </a>
   <button class="bnav-item" type="button" onclick="openInfo()">
     <i class="fa-solid fa-circle-info"></i>
     <span>Info</span>
   </button>
 </nav>
-
 </body>
 </html>
