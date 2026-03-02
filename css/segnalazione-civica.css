@@ -16,7 +16,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   background: var(--paper);
   color: var(--ink);
   min-height: 100vh;
@@ -62,7 +62,7 @@ header {
 }
 
 header h1 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 1.4rem;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -82,7 +82,7 @@ header h1 {
   border-radius: 8px;
   padding: 0.4rem 0.9rem;
   font-size: 0.78rem;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
@@ -152,7 +152,7 @@ header h1 {
 .info-modal-close:hover { opacity: 1; }
 
 .info-modal h2 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 1.35rem;
   margin-bottom: 0.8rem;
   color: var(--amber);
@@ -206,7 +206,7 @@ main {
 }
 
 .section-title {
-  font-family: 'Fraunces', serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -233,7 +233,7 @@ main {
 .photo-zone .big-icon { font-size: 2.5rem; margin-bottom: 0.8rem; display: block; }
 
 .photo-zone h3 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 0.3rem;
@@ -260,7 +260,7 @@ main {
   padding: 0.4rem 0.8rem;
   font-size: 0.75rem;
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   backdrop-filter: blur(4px);
 }
 
@@ -289,7 +289,7 @@ main {
   border-radius: 10px;
   border: 1.5px solid rgba(26,18,8,0.15);
   background: white;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 0.82rem;
   font-weight: 500;
   cursor: pointer;
@@ -315,7 +315,7 @@ main {
   border: none;
   border-bottom: 1px solid rgba(26,18,8,0.06);
   cursor: default;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 0.82rem;
   color: var(--sage);
   text-align: left;
@@ -408,7 +408,7 @@ select, input[type="text"], input[type="email"], textarea {
   padding: 0.75rem 1rem;
   border: 1.5px solid rgba(26,18,8,0.15);
   border-radius: 10px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 0.9rem;
   background: var(--paper);
   color: var(--ink);
@@ -476,7 +476,7 @@ textarea { resize: vertical; min-height: 90px; }
   border-radius: 12px;
   background: var(--paper);
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   text-align: center;
   transition: all 0.2s;
   min-height: 80px;
@@ -515,7 +515,7 @@ textarea { resize: vertical; min-height: 90px; }
   border-radius: 10px;
   background: var(--paper);
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   text-align: center;
   transition: all 0.2s;
   min-height: 64px;
@@ -536,7 +536,7 @@ textarea { resize: vertical; min-height: 90px; }
   border: 1.5px dashed rgba(26,18,8,0.18);
   border-radius: 10px;
   background: transparent;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 0.78rem;
   color: #8a7f70;
   cursor: pointer;
@@ -555,7 +555,7 @@ textarea { resize: vertical; min-height: 90px; }
   color: var(--paper);
   border: none;
   border-radius: 14px;
-  font-family: 'Fraunces', serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 1.15rem;
   font-weight: 600;
   cursor: pointer;
@@ -580,7 +580,7 @@ textarea { resize: vertical; min-height: 90px; }
   color: var(--paper);
   border: none;
   border-radius: 10px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
@@ -630,7 +630,7 @@ textarea { resize: vertical; min-height: 90px; }
 }
 
 .success-card h2 {
-  font-family: 'Fraunces', serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 1.8rem;
   font-weight: 800;
   margin-bottom: 0.5rem;
@@ -691,7 +691,7 @@ textarea { resize: vertical; min-height: 90px; }
   padding: 0.2rem 0.5rem;
   font-size: 0.75rem;
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   flex-shrink: 0;
 }
 
@@ -738,7 +738,7 @@ textarea { resize: vertical; min-height: 90px; }
   font-size: 0.8rem;
   cursor: pointer;
   color: #6a4f00;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-weight: 500;
 }
 .exif-banner-btn:hover { background: #fff0a0; }
@@ -767,7 +767,7 @@ textarea { resize: vertical; min-height: 90px; }
   font-size: 0.78rem;
   cursor: pointer;
   color: #7a5f00;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
 }
 
 /* ─────────────────────────────────────────────
@@ -830,7 +830,7 @@ textarea { resize: vertical; min-height: 90px; }
     border: none;
     cursor: pointer;
     color: rgba(26,18,8,0.35);
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Titillium Web', sans-serif;
     font-size: 0.58rem;
     font-weight: 500;
     text-decoration: none;
@@ -878,7 +878,7 @@ textarea { resize: vertical; min-height: 90px; }
   border: 1.5px solid rgba(26,18,8,0.14);
   border-radius: 50px;
   background: none;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 0.82rem;
   color: #6b5e4e;
   cursor: pointer;
