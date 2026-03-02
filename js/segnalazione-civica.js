@@ -67,7 +67,7 @@ function buildDestGrid() {
   const VISIBLE = 6;
   grid.innerHTML = _destinatari.map((d, i) => `
     <button type="button" class="dest-btn${i >= VISIBLE ? ' dest-extra' : ''}" id="dest-${d.id}" onclick="selectDest('${d.id}')"${i >= VISIBLE ? ' style="display:none"' : ''}>
-      <span class="dest-icon">${d.icon}</span>
+      <span class="dest-icon"><i class="${d.icon}"></i></span>
       <span class="dest-nome">${d.nome}</span>
       <span class="dest-sub">${d.descrizione}</span>
     </button>
@@ -508,8 +508,9 @@ async function sendReport() {
       whatsapp: `https://wa.me/?text=${txt}`,
       facebook: `https://www.facebook.com/sharer/sharer.php?u=${mapUrl}&quote=${txt}`,
       telegram: `https://t.me/share/url?url=${mapUrl}&text=${txt}`,
+      bluesky:  `https://bsky.app/intent/compose?text=${txt}`,
     };
-    const names = { twitter: 'X/Twitter', whatsapp: 'WhatsApp', facebook: 'Facebook', telegram: 'Telegram' };
+    const names = { twitter: 'X/Twitter', whatsapp: 'WhatsApp', facebook: 'Facebook', telegram: 'Telegram', bluesky: 'Bluesky' };
     let delay = toEmail ? 1000 : 200;
     for (const p of _socialPlatforms) {
       setTimeout(() => window.open(urls[p], '_blank'), delay);

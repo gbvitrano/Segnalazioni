@@ -873,24 +873,25 @@ textarea { resize: vertical; min-height: 90px; }
 .social-chip {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.5rem 1rem;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: 0;
   border: 1.5px solid rgba(26,18,8,0.14);
-  border-radius: 50px;
+  border-radius: 50%;
   background: none;
-  font-family: 'Titillium Web', sans-serif;
-  font-size: 0.82rem;
   color: #6b5e4e;
   cursor: pointer;
   transition: border-color 0.18s, background 0.18s, color 0.18s;
 }
-.social-chip i { font-size: 0.95rem; }
+.social-chip i { font-size: 1.1rem; }
 .social-chip:hover { border-color: var(--amber); color: var(--amber); }
 .social-chip.active { color: white; }
 .social-chip.active[data-platform="twitter"]  { background: #000;    border-color: #000; }
 .social-chip.active[data-platform="whatsapp"] { background: #25D366; border-color: #25D366; }
 .social-chip.active[data-platform="facebook"] { background: #1877F2; border-color: #1877F2; }
 .social-chip.active[data-platform="telegram"] { background: #229ED9; border-color: #229ED9; }
+.social-chip.active[data-platform="bluesky"]  { background: #0285ff; border-color: #0285ff; }
 
 .social-tags-row { margin-top: 0.2rem; }
 

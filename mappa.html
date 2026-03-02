@@ -58,14 +58,14 @@
 <body>
 
 <header>
-  <div class="logo-mark">📍</div>
+  <div class="logo-mark"><i class="fa-solid fa-location-dot"></i></div>
   <div>
     <h1>SegnalaOra</h1>
     <p>Mappa segnalazioni civiche</p>
   </div>
   <div class="header-right">
     <a href="index.html" class="btn-report">+ Nuova segnalazione</a>
-    <button class="btn-report btn-resolve" onclick="openResolve('')">✅ <span class="btn-resolve-text">Segna risolta</span></button>
+    <button class="btn-report btn-resolve" onclick="openResolve('')"><i class="fa-solid fa-circle-check"></i> <span class="btn-resolve-text">Segna risolta</span></button>
     <button class="btn-info" onclick="openStats()" title="Statistiche">
       <i class="fa-solid fa-chart-simple"></i>
     </button>
@@ -84,7 +84,7 @@
     <button class="info-modal-close" onclick="closeInfo()" title="Chiudi">
       <i class="fa-solid fa-xmark"></i>
     </button>
-    <h2>📍 SegnalaOra</h2>
+    <h2><i class="fa-solid fa-location-dot"></i> SegnalaOra</h2>
     <p><strong>SegnalaOra</strong> è uno strumento open source per segnalare problemi del territorio al proprio Comune: buche stradali, rifiuti abbandonati, illuminazione pubblica guasta, verde incurato e molto altro.</p>
     <p><strong>Come funziona:</strong></p>
     <ol>
@@ -97,7 +97,7 @@
 
     <p><strong>Come segnalare una risoluzione:</strong></p>
     <ol>
-      <li>Clicca il pulsante <strong>✅ Segna risolta</strong> in alto a destra</li>
+      <li>Clicca il pulsante <strong><i class="fa-solid fa-circle-check"></i> Segna risolta</strong> in alto a destra</li>
       <li>Incolla il codice UUID ricevuto via email nella casella di testo</li>
       <li>Clicca <em>Conferma risoluzione</em> — lo stato sarà aggiornato entro pochi minuti</li>
     </ol>
@@ -118,7 +118,7 @@
     <button class="info-modal-close" onclick="closeResolve()" title="Chiudi">
       <i class="fa-solid fa-xmark"></i>
     </button>
-    <h2 style="color:var(--sage)">✅ Segna come risolta</h2>
+    <h2 style="color:var(--sage)"><i class="fa-solid fa-circle-check"></i> Segna come risolta</h2>
     <p>Incolla il codice di risoluzione ricevuto via email:</p>
     <input class="resolve-id-box" id="resolveIdDisplay" type="text"
       placeholder="Es. 550e8400-e29b-41d4-a716-446655440000"
@@ -128,7 +128,7 @@
       Questa azione aggiorna lo stato nel sistema. La segnalazione sarà visibile nella sezione <em>Risolte</em> entro 1–3 minuti.
     </p>
     <button class="resolve-confirm-btn" id="resolveConfirmBtn" onclick="confirmResolve()">
-      ✅ Conferma risoluzione
+      <i class="fa-solid fa-circle-check"></i> Conferma risoluzione
     </button>
     <div class="resolve-result" id="resolveResult"></div>
   </div>
@@ -171,17 +171,17 @@
       </div>
 
       <div class="view-tabs">
-        <button class="view-tab active" id="tabAperte"  onclick="setViewMode('aperte')">📍 Aperte</button>
-        <button class="view-tab"        id="tabRisolte" onclick="setViewMode('risolte')">✅ Risolte</button>
+        <button class="view-tab active" id="tabAperte"  onclick="setViewMode('aperte')"><i class="fa-solid fa-location-dot"></i> Aperte</button>
+        <button class="view-tab"        id="tabRisolte" onclick="setViewMode('risolte')"><i class="fa-solid fa-circle-check"></i> Risolte</button>
       </div>
 
       <div class="filters" id="filtersPanel">
         <span class="filter-label">Urgenza</span>
         <div class="filter-chips" id="urgFilter">
           <button type="button" class="chip active"       data-val="all"     onclick="setFilter('urgenza','all',this)">Tutte</button>
-          <button type="button" class="chip chip-alta"    data-val="Alta"    onclick="setFilter('urgenza','Alta',this)">🔴 Alta</button>
-          <button type="button" class="chip chip-normale" data-val="Normale" onclick="setFilter('urgenza','Normale',this)">🟠 Normale</button>
-          <button type="button" class="chip chip-bassa"   data-val="Bassa"   onclick="setFilter('urgenza','Bassa',this)">🔵 Bassa</button>
+          <button type="button" class="chip chip-alta"    data-val="Alta"    onclick="setFilter('urgenza','Alta',this)"><i class="fa-solid fa-circle"></i> Alta</button>
+          <button type="button" class="chip chip-normale" data-val="Normale" onclick="setFilter('urgenza','Normale',this)"><i class="fa-solid fa-circle"></i> Normale</button>
+          <button type="button" class="chip chip-bassa"   data-val="Bassa"   onclick="setFilter('urgenza','Bassa',this)"><i class="fa-solid fa-circle"></i> Bassa</button>
         </div>
 
         <span class="filter-label">Stato</span>
@@ -204,7 +204,7 @@
 
   <!-- CTA mobile (nascosta su desktop) -->
   <a href="index.html" class="mobile-cta">
-    📷 NUOVA SEGNALAZIONE
+    <i class="fa-solid fa-camera"></i> NUOVA SEGNALAZIONE
   </a>
 
   <!-- LEGENDA -->
@@ -224,7 +224,7 @@
 </div><!-- /app-body -->
 
 <footer>
-  <span>📍 <strong>SegnalaOra</strong> — Segnalazioni civiche open source</span>
+  <span><i class="fa-solid fa-location-dot"></i> <strong>SegnalaOra</strong> — Segnalazioni civiche open source</span>
   <span class="footer-sep">·</span>
   <span>Dati: <a href="#" target="_blank" rel="noopener">Google Sheets</a></span>
   <span class="footer-sep">·</span>

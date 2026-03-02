@@ -10,7 +10,7 @@
       "nome": "Buche stradali",
       "descrizione": "Buche, asfalto, marciapiedi",
       "email": "lavori.pubblici@comune.[nome].it",
-      "icon": "🕳️",
+      "icon": "fa-solid fa-road-circle-exclamation",
       "categoria": "Buche e dissesti stradali"
     },
     {
@@ -18,7 +18,7 @@
       "nome": "Illuminazione",
       "descrizione": "Lampioni guasti, semafori",
       "email": "illuminazione@comune.[nome].it",
-      "icon": "💡",
+      "icon": "fa-solid fa-lightbulb",
       "categoria": "Illuminazione pubblica guasta"
     },
     {
@@ -26,7 +26,7 @@
       "nome": "Rifiuti",
       "descrizione": "Rifiuti abbandonati, degrado",
       "email": "ambiente@comune.[nome].it",
-      "icon": "🗑️",
+      "icon": "fa-solid fa-trash-can",
       "categoria": "Rifiuti abbandonati"
     },
     {
@@ -34,7 +34,7 @@
       "nome": "Verde Pubblico",
       "descrizione": "Alberi, parchi, aree verdi",
       "email": "verde@comune.[nome].it",
-      "icon": "🌳",
+      "icon": "fa-solid fa-tree",
       "categoria": "Alberi e verde pubblico"
     },
     {
@@ -42,7 +42,7 @@
       "nome": "Perdite idriche",
       "descrizione": "Perdite, allagamenti, fognature",
       "email": "acqua@comune.[nome].it",
-      "icon": "🚰",
+      "icon": "fa-solid fa-faucet-drip",
       "categoria": "Perdite idriche"
     },
     {
@@ -50,7 +50,7 @@
       "nome": "Deiezioni",
       "descrizione": "Deiezioni animali non raccolte",
       "email": "ambiente@comune.[nome].it",
-      "icon": "🐕",
+      "icon": "fa-solid fa-paw",
       "categoria": "Deiezioni non raccolte"
     },
     {
@@ -58,7 +58,7 @@
       "nome": "Segnaletica",
       "descrizione": "Cartelli danneggiati, strisce",
       "email": "lavori.pubblici@comune.[nome].it",
-      "icon": "🚧",
+      "icon": "fa-solid fa-signs-post",
       "categoria": "Segnaletica danneggiata"
     },
     {
@@ -66,7 +66,7 @@
       "nome": "Veicoli abbandonati",
       "descrizione": "Auto, moto abbandonate",
       "email": "polizialocale@comune.[nome].it",
-      "icon": "🛺",
+      "icon": "fa-solid fa-car-side",
       "categoria": "Veicoli abbandonati"
     },
     {
@@ -74,7 +74,7 @@
       "nome": "Sicurezza",
       "descrizione": "Degrado, ordine pubblico",
       "email": "polizialocale@comune.[nome].it",
-      "icon": "🚔",
+      "icon": "fa-solid fa-shield-halved",
       "categoria": "Degrado e sicurezza"
     },
     {
@@ -82,7 +82,7 @@
       "nome": "Barriere arch.",
       "descrizione": "Accessibilità disabili",
       "email": "lavori.pubblici@comune.[nome].it",
-      "icon": "♿",
+      "icon": "fa-solid fa-wheelchair",
       "categoria": "Barriere architettoniche"
     },
     {
@@ -90,7 +90,7 @@
       "nome": "Immobile",
       "descrizione": "Edifici pericolanti, crolli",
       "email": "lavori.pubblici@comune.[nome].it",
-      "icon": "🏚️",
+      "icon": "fa-solid fa-house-crack",
       "categoria": "Immobile pericolante"
     },
     {
@@ -98,7 +98,7 @@
       "nome": "Rumore",
       "descrizione": "Inquinamento acustico",
       "email": "polizialocale@comune.[nome].it",
-      "icon": "🔊",
+      "icon": "fa-solid fa-volume-high",
       "categoria": "Inquinamento acustico"
     },
     {
@@ -107,7 +107,7 @@
       "descrizione": "Inserisci l'email destinatario",
       "email": null,
       "custom": true,
-      "icon": "✏️",
+      "icon": "fa-solid fa-ellipsis",
       "categoria": "Altro"
     }
   ]

@@ -417,6 +417,12 @@ header p {
 .chip.chip-alta.active   { background: var(--urg-alta);    color: white; border-color: var(--urg-alta);    }
 .chip.chip-normale.active{ background: var(--urg-normale); color: white; border-color: var(--urg-normale); }
 .chip.chip-bassa.active  { background: var(--urg-bassa);   color: white; border-color: var(--urg-bassa); }
+.chip.chip-alta    i { color: var(--urg-alta); }
+.chip.chip-normale i { color: var(--urg-normale); }
+.chip.chip-bassa   i { color: var(--urg-bassa); }
+.chip.chip-alta.active i,
+.chip.chip-normale.active i,
+.chip.chip-bassa.active i { color: white; }
 
 /* ── LISTA SEGNALAZIONI ──────────────────────────────── */
 .report-list { flex: 1; padding: 0.8rem; }

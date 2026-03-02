@@ -55,12 +55,12 @@
 <body>
 
 <header>
-  <div class="logo-mark">📍</div>
+  <div class="logo-mark"><i class="fa-solid fa-location-dot"></i></div>
   <div>
     <h1>SegnalaOra</h1>
   </div>
   <div class="header-actions">
-    <a href="mappa.html" class="btn-map-link">🗺 Mappa</a>
+    <a href="mappa.html" class="btn-map-link"><i class="fa-solid fa-map"></i> Mappa</a>
     <button class="btn-info" onclick="openInfo()" title="Informazioni sul progetto">
       <i class="fa-solid fa-circle-info"></i>
     </button>
@@ -76,7 +76,7 @@
     <button class="info-modal-close" onclick="closeInfo()" title="Chiudi">
       <i class="fa-solid fa-xmark"></i>
     </button>
-    <h2>📍 SegnalaOra</h2>
+    <h2><i class="fa-solid fa-location-dot"></i> SegnalaOra</h2>
     <p><strong>SegnalaOra</strong> è uno strumento open source per segnalare problemi del territorio al proprio Comune: buche stradali, rifiuti abbandonati, illuminazione pubblica guasta, verde incurato e molto altro.</p>
     <p><strong>Come funziona:</strong></p>
     <ol>
@@ -105,14 +105,14 @@
         <span id="geoText">In attesa di posizione…</span>
       </div>
       <div class="geo-bar-right">
-        <button class="btn-sm btn-sm--inline" type="button" onclick="getGPS()">📡 GPS</button>
-        <button class="btn-sm btn-sm--inline" type="button" onclick="useExifGps()" id="btnExif" style="display:none">📸 EXIF</button>
+        <button class="btn-sm btn-sm--inline" type="button" onclick="getGPS()"><i class="fa-solid fa-location-crosshairs"></i> GPS</button>
+        <button class="btn-sm btn-sm--inline" type="button" onclick="useExifGps()" id="btnExif" style="display:none"><i class="fa-solid fa-camera"></i> EXIF</button>
       </div>
     </div>
     <div class="map-collapsible" id="mapCollapsible">
       <div class="exif-banner" id="exifBanner" style="display:none">
-        📸 <strong>Posizione estratta dalla foto (EXIF).</strong> Verifica che il marker corrisponda al luogo del problema. Se non è corretto, trascinalo nella posizione giusta.
-        <button class="exif-banner-btn" type="button" onclick="dismissExifBanner()">📡 Usa GPS invece</button>
+        <i class="fa-solid fa-camera"></i> <strong>Posizione estratta dalla foto (EXIF).</strong> Verifica che il marker corrisponda al luogo del problema. Se non è corretto, trascinalo nella posizione giusta.
+        <button class="exif-banner-btn" type="button" onclick="dismissExifBanner()"><i class="fa-solid fa-location-crosshairs"></i> Usa GPS invece</button>
       </div>
       <div id="map"></div>
       <label>Indirizzo rilevato</label>
@@ -122,27 +122,27 @@
 
   <!-- ② FOTO -->
   <section class="form-section">
-    <div class="section-title">📷 Foto del problema</div>
+    <div class="section-title"><i class="fa-solid fa-camera"></i> Foto del problema</div>
     <div class="photo-zone" id="photoZone" onclick="document.getElementById('fileInput').click()">
       <input type="file" id="fileInput" accept="image/*">
-      <span class="big-icon">🖼️</span>
+      <span class="big-icon"><i class="fa-solid fa-image"></i></span>
       <h3>Tocca per scattare o scegliere</h3>
       <p>JPG, PNG, HEIC · ridimensionata a 1280 px</p>
     </div>
     <div class="photo-preview" id="photoPreview">
       <img id="previewImg" src="" alt="Anteprima">
-      <button class="change-btn" type="button" onclick="document.getElementById('fileInput').click()">✎ Cambia</button>
+      <button class="change-btn" type="button" onclick="document.getElementById('fileInput').click()"><i class="fa-solid fa-pen"></i> Cambia</button>
     </div>
     <div class="photo-info" id="photoInfo"></div>
     <div class="btn-row" style="margin-top:0.8rem">
-      <button class="btn-sm" type="button" onclick="openCamera()">📷 Fotocamera</button>
-      <button class="btn-sm" type="button" onclick="openGallery()">🗂️ Galleria</button>
+      <button class="btn-sm" type="button" onclick="openCamera()"><i class="fa-solid fa-camera"></i> Fotocamera</button>
+      <button class="btn-sm" type="button" onclick="openGallery()"><i class="fa-solid fa-images"></i> Galleria</button>
     </div>
   </section>
 
   <!-- ③ DESTINATARIO -->
   <section class="form-section">
-    <div class="section-title">📤 A chi segnali?</div>
+    <div class="section-title"><i class="fa-solid fa-paper-plane"></i> A chi segnali?</div>
     <div class="dest-grid" id="destGrid">
       <!-- Popolato da JS da dati/destinatari.json -->
     </div>
@@ -157,14 +157,14 @@
 
   <!-- ④ DETTAGLI -->
   <section class="form-section">
-    <div class="section-title">📝 Urgenza e note</div>
+    <div class="section-title"><i class="fa-solid fa-pen-to-square"></i> Urgenza e note</div>
 
     <label>Urgenza</label>
     <div class="select-wrap">
       <select id="urgenza">
-        <option value="Normale">🟡 Normale</option>
-        <option value="Alta">🔴 Alta — pericolo immediato</option>
-        <option value="Bassa">🟢 Bassa — segnalazione informativa</option>
+        <option value="Normale">Normale</option>
+        <option value="Alta">Alta — pericolo immediato</option>
+        <option value="Bassa">Bassa — segnalazione informativa</option>
       </select>
     </div>
 
@@ -174,7 +174,7 @@
 
   <!-- ⑤ MITTENTE -->
   <section class="form-section">
-    <div class="section-title">👤 I tuoi dati</div>
+    <div class="section-title"><i class="fa-solid fa-user"></i> I tuoi dati</div>
 
     <label>Nome o Nickname *</label>
     <input type="text" id="nome" placeholder="Il tuo nome o nickname" oninput="clearFieldError('nome')" required>
@@ -189,20 +189,23 @@
 
   <!-- ⑥ CONDIVIDI -->
   <section class="form-section">
-    <div class="section-title">📣 Condividi la segnalazione</div>
+    <div class="section-title"><i class="fa-solid fa-share-nodes"></i> Condividi la segnalazione</div>
     <p class="section-hint">Diffondi il problema sui social per aumentare la visibilità</p>
     <div class="social-chips" id="socialChips">
-      <button type="button" class="social-chip" data-platform="twitter" onclick="toggleSocial('twitter')">
-        <i class="fa-brands fa-x-twitter"></i><span>X / Twitter</span>
+      <button type="button" class="social-chip" data-platform="twitter"  title="X / Twitter" onclick="toggleSocial('twitter')">
+        <i class="fa-brands fa-x-twitter"></i>
       </button>
-      <button type="button" class="social-chip" data-platform="whatsapp" onclick="toggleSocial('whatsapp')">
-        <i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span>
+      <button type="button" class="social-chip" data-platform="whatsapp" title="WhatsApp" onclick="toggleSocial('whatsapp')">
+        <i class="fa-brands fa-whatsapp"></i>
       </button>
-      <button type="button" class="social-chip" data-platform="facebook" onclick="toggleSocial('facebook')">
-        <i class="fa-brands fa-facebook-f"></i><span>Facebook</span>
+      <button type="button" class="social-chip" data-platform="facebook" title="Facebook" onclick="toggleSocial('facebook')">
+        <i class="fa-brands fa-facebook-f"></i>
       </button>
-      <button type="button" class="social-chip" data-platform="telegram" onclick="toggleSocial('telegram')">
-        <i class="fa-brands fa-telegram"></i><span>Telegram</span>
+      <button type="button" class="social-chip" data-platform="telegram" title="Telegram" onclick="toggleSocial('telegram')">
+        <i class="fa-brands fa-telegram"></i>
+      </button>
+      <button type="button" class="social-chip" data-platform="bluesky"  title="Bluesky" onclick="toggleSocial('bluesky')">
+        <i class="fa-brands fa-bluesky"></i>
       </button>
     </div>
     <div class="social-tags-row" id="socialTagsRow" style="display:none">
@@ -215,7 +218,7 @@
   <!-- ⑦ INVIA -->
   <section class="form-section form-section--send">
     <button class="send-btn" id="sendBtn" type="button" onclick="sendReport()">
-      ✉️ Invia Segnalazione
+      <i class="fa-solid fa-paper-plane"></i> Invia Segnalazione
     </button>
   </section>
 
@@ -224,35 +227,35 @@
 <!-- SUCCESS OVERLAY -->
 <div class="success-overlay" id="successOverlay">
   <div class="success-card">
-    <span class="success-icon">✅</span>
+    <span class="success-icon"><i class="fa-solid fa-circle-check"></i></span>
     <h2>Segnalazione inviata!</h2>
     <p>Il tuo report è stato trasmesso. Riceverai una conferma via email. Conserva l'ID per seguire l'evoluzione.</p>
     <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-bottom:1.5rem;">
       <div class="tag-id" id="ticketId" style="margin-bottom:0">SGN-000000</div>
       <button id="copyIdBtn" type="button" onclick="copyTicketId()" title="Copia ID"
-        style="background:none;border:1px solid rgba(26,18,8,0.25);border-radius:6px;padding:0.3rem 0.6rem;cursor:pointer;font-size:0.8rem;font-family:'DM Sans',sans-serif;">
-        📋 Copia
+        style="background:none;border:1px solid rgba(26,18,8,0.25);border-radius:6px;padding:0.3rem 0.6rem;cursor:pointer;font-size:0.8rem;font-family:'Titillium Web',sans-serif;">
+        <i class="fa-regular fa-copy"></i> Copia
       </button>
     </div>
     <div class="token-row">
-      <span class="token-label">🔑 Token risoluzione:</span>
+      <span class="token-label"><i class="fa-solid fa-key"></i> Token risoluzione:</span>
       <span class="token-val" id="resolveToken">—</span>
-      <button id="copyTokenBtn" type="button" onclick="copyToken()" class="copy-btn-small" title="Copia token">📋 Copia</button>
+      <button id="copyTokenBtn" type="button" onclick="copyToken()" class="copy-btn-small" title="Copia token"><i class="fa-regular fa-copy"></i> Copia</button>
     </div>
     <p class="token-hint">Conserva questo codice: serve alla PA per marcare la segnalazione come risolta.</p>
     <div class="warn-banner" id="emailWarnBanner" style="display:none">
-      ⚠️ <strong>Nota:</strong> il messaggio email si apre nel tuo client di posta. Verifica di averlo inviato prima di chiudere.
+      <i class="fa-solid fa-triangle-exclamation"></i> <strong>Nota:</strong> il messaggio email si apre nel tuo client di posta. Verifica di averlo inviato prima di chiudere.
     </div>
     <p id="successDetail" style="margin-bottom:0.5rem;"></p>
     <div class="channels-sent" id="channelsSent"></div>
     <div class="copy-reminder" id="copyReminder">
-      💡 Hai copiato il tuo ID segnalazione? Ne avrai bisogno per seguire l'evoluzione.
+      <i class="fa-solid fa-lightbulb"></i> Hai copiato il tuo ID segnalazione? Ne avrai bisogno per seguire l'evoluzione.
       <button class="copy-reminder-close" type="button" onclick="forceClose()">Chiudi comunque</button>
     </div>
     <br>
     <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
-      <button class="btn-next" type="button" onclick="resetAll()" style="margin:0;">+ Nuova segnalazione</button>
-      <button type="button" onclick="closeSuccess()" style="margin:0;padding:0.75rem 1.5rem;border-radius:12px;border:1.5px solid rgba(26,18,8,0.25);background:transparent;font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:500;cursor:pointer;color:var(--ink);">✕ Chiudi</button>
+      <button class="btn-next" type="button" onclick="resetAll()" style="margin:0;"><i class="fa-solid fa-plus"></i> Nuova segnalazione</button>
+      <button type="button" onclick="closeSuccess()" style="margin:0;padding:0.75rem 1.5rem;border-radius:12px;border:1.5px solid rgba(26,18,8,0.25);background:transparent;font-family:'Titillium Web',sans-serif;font-size:0.95rem;font-weight:500;cursor:pointer;color:var(--ink);"><i class="fa-solid fa-xmark"></i> Chiudi</button>
     </div>
   </div>
 </div>
