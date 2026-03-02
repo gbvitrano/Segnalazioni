@@ -69,6 +69,9 @@
     <button class="btn-info" onclick="openStats()" title="Statistiche">
       <i class="fa-solid fa-chart-simple"></i>
     </button>
+    <a href="profilo.html" class="btn-info" title="Le mie segnalazioni">
+      <i class="fa-solid fa-user"></i>
+    </a>
     <button class="btn-info" onclick="openInfo()" title="Informazioni sul progetto">
       <i class="fa-solid fa-circle-info"></i>
     </button>
@@ -102,6 +105,13 @@
       <li>Clicca <em>Conferma risoluzione</em> — lo stato sarà aggiornato entro pochi minuti</li>
     </ol>
     <p style="font-size:0.83rem;color:#777">Il codice di risoluzione è incluso nell'email inviata alla PA al momento della segnalazione.</p>
+
+    <p><strong><i class="fa-solid fa-user" style="color:var(--amber)"></i> Il tuo profilo:</strong></p>
+    <ol>
+      <li>Accedi a <a href="profilo.html"><strong>Le mie segnalazioni</strong></a> per vedere tutte le segnalazioni inviate da questo dispositivo</li>
+      <li>Lo stato si aggiorna automaticamente incrociando i dati con i fogli pubblici</li>
+      <li>Puoi anche cercare le tue segnalazioni per email, se la colonna è pubblica nel foglio</li>
+    </ol>
 
     <div class="credits">
       <strong>Idea di</strong> Andrea Borruso, Salvatore Fiandaca, Ciro Spataro e Giovan Battista Vitrano<br>
@@ -262,6 +272,10 @@
     <i class="fa-solid fa-chart-simple"></i>
     <span>Statistiche</span>
   </button>
+  <a class="bnav-item" href="profilo.html">
+    <i class="fa-solid fa-user"></i>
+    <span>Profilo</span>
+  </a>
   <button class="bnav-item" type="button" onclick="openInfo()">
     <i class="fa-solid fa-circle-info"></i>
     <span>Info</span>

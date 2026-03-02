@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SegnalaOra — Le mie segnalazioni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+<link rel="stylesheet" href="css/profilo.css">
+<link rel="shortcut icon" href="img/favicon.ico"/>
+<link rel="icon" href="img/favicon.png" type="image/png"/>
+<script src="js/theme.js"></script>
+</head>
+<body>
+
+<header>
+  <a href="javascript:history.back()" class="btn-back" title="Torna indietro">
+    <i class="fa-solid fa-arrow-left"></i>
+  </a>
+  <h1><i class="fa-solid fa-user" style="color:var(--amber);margin-right:0.4rem;font-size:0.95rem"></i>Le mie segnalazioni</h1>
+  <div class="header-actions">
+    <button class="btn-theme" id="themeToggle" onclick="toggleTheme()" title="Tema">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- Riepilogo statistiche -->
+  <div class="profile-summary" id="profileSummary" style="display:none"></div>
+
+  <!-- Cerca per email -->
+  <div class="email-search-section">
+    <button class="email-search-toggle" id="emailSearchToggle" onclick="toggleEmailSearch()">
+      <i class="fa-solid fa-magnifying-glass"></i> Cerca per email
+    </button>
+    <div class="email-search-form" id="emailSearchForm" style="display:none">
+      <input type="email" id="searchEmail" placeholder="tua@email.it"
+        onkeydown="if(event.key==='Enter')searchByEmail()">
+      <button id="searchBtn" onclick="searchByEmail()">
+        <i class="fa-solid fa-magnifying-glass"></i> Cerca
+      </button>
+      <p class="search-hint">
+        <i class="fa-solid fa-circle-info" style="color:var(--amber)"></i>
+        Mostra le segnalazioni archiviate con questa email — richiede che la colonna <em>Email_Segnalante</em> sia presente nel foglio pubblico.
+      </p>
+    </div>
+  </div>
+
+  <!-- Lista segnalazioni -->
+  <div class="profile-list" id="profileList">
+    <div class="no-results-loading">
+      <div class="spinner-small"></div>
+    </div>
+  </div>
+
+  <!-- Cancella cronologia -->
+  <div class="clear-section" id="clearSection" style="display:none">
+    <button class="btn-clear" onclick="confirmClear()">
+      <i class="fa-solid fa-trash"></i> Cancella cronologia locale
+    </button>
+  </div>
+
+</main>
+
+<!-- BOTTOM NAV mobile -->
+<nav class="bottom-nav">
+  <a class="bnav-item" href="index.html">
+    <i class="fa-solid fa-camera"></i>
+    <span>Segnala</span>
+  </a>
+  <a class="bnav-item" href="mappa.html">
+    <i class="fa-solid fa-map-location-dot"></i>
+    <span>Mappa</span>
+  </a>
+  <a class="bnav-item" href="statistiche.html">
+    <i class="fa-solid fa-chart-simple"></i>
+    <span>Statistiche</span>
+  </a>
+  <button class="bnav-item bnav-active" type="button">
+    <i class="fa-solid fa-user"></i>
+    <span>Profilo</span>
+  </button>
+</nav>
+
+<script src="js/profilo.js"></script>
+</body>
+</html>

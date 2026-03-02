@@ -1,0 +1,366 @@
+/* ═══════════════════════════════════════════════════════
+   SegnalaOra — Profilo utente
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+  --ink:        #3d2f1e;
+  --paper:      #f5f0e8;
+  --amber:      #d4820a;
+  --amber-light:#e8a030;
+  --sage:       #3d5a47;
+  --rust:       #c0392b;
+  --mist:       #e8e2d6;
+  --shadow:     rgba(60,40,20,0.12);
+  --urg-alta:   #e53535;
+  --urg-normale:#ff9900;
+  --urg-bassa:  #3cb4d8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Titillium Web', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 4.5rem; /* spazio bottom nav */
+}
+
+/* ── HEADER ──────────────────────────────────────────── */
+header {
+  background: white;
+  color: var(--ink);
+  padding: 0.9rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 100;
+  flex-shrink: 0;
+  box-shadow: 0 1px 0 rgba(60,40,20,0.10), 0 2px 12px rgba(60,40,20,0.07);
+  position: sticky;
+  top: 0;
+}
+
+.btn-back {
+  width: 34px; height: 34px;
+  border: 1.5px solid rgba(61,47,30,0.18);
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  transition: border-color .18s, color .18s;
+}
+.btn-back:hover { border-color: var(--amber); color: var(--amber); }
+
+header h1 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  flex: 1;
+}
+
+.header-actions { margin-left: auto; display: flex; gap: 0.5rem; align-items: center; }
+
+.btn-theme {
+  width: 34px; height: 34px;
+  border: 1.5px solid rgba(61,47,30,0.18);
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink);
+  font-size: 0.95rem;
+  transition: border-color .18s, color .18s;
+}
+.btn-theme:hover { border-color: var(--amber); color: var(--amber); }
+
+/* ── MAIN ────────────────────────────────────────────── */
+main { flex: 1; padding: 1rem 1rem 1.5rem; max-width: 640px; margin: 0 auto; width: 100%; }
+
+/* ── SUMMARY STATS ───────────────────────────────────── */
+.profile-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.summary-stat {
+  background: white;
+  border-radius: 10px;
+  padding: 0.6rem 0.4rem;
+  text-align: center;
+  box-shadow: 0 1px 4px var(--shadow);
+}
+
+.summary-num {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.summary-lbl {
+  font-size: 0.6rem;
+  color: #8a7f70;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.summary-stat.resolved .summary-num { color: var(--sage); }
+.summary-stat.urgent   .summary-num { color: var(--rust); }
+
+/* ── EMAIL SEARCH ────────────────────────────────────── */
+.email-search-section { margin-bottom: 1rem; }
+
+.email-search-toggle {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  background: white;
+  border: 1.5px dashed rgba(61,47,30,0.2);
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 0.9rem;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  transition: border-color .18s, color .18s;
+}
+.email-search-toggle:hover { border-color: var(--amber); color: var(--amber); }
+.email-search-toggle i { color: var(--amber); }
+
+.email-search-form {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  box-shadow: 0 1px 6px var(--shadow);
+}
+
+.email-search-form input {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1.5px solid rgba(61,47,30,0.18);
+  border-radius: 8px;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--paper);
+  margin-bottom: 0.6rem;
+  outline: none;
+}
+.email-search-form input:focus { border-color: var(--amber); }
+
+.email-search-form button {
+  width: 100%;
+  padding: 0.65rem;
+  background: var(--amber);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+  transition: background .18s;
+}
+.email-search-form button:hover:not(:disabled) { background: var(--amber-light); }
+.email-search-form button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.search-hint {
+  font-size: 0.75rem;
+  color: #9a8f80;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* ── PROFILE LIST ────────────────────────────────────── */
+.profile-list { display: flex; flex-direction: column; gap: 0.6rem; }
+
+.no-reports {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: #9a8f80;
+  font-size: 0.9rem;
+  background: white;
+  border-radius: 12px;
+}
+.no-reports i { font-size: 2rem; display: block; margin-bottom: 0.75rem; color: var(--mist); }
+
+.search-results-header {
+  font-size: 0.82rem;
+  color: #9a8f80;
+  padding: 0.4rem 0.2rem;
+}
+.search-results-header strong { color: var(--ink); }
+
+.profile-card {
+  background: white;
+  border: 1.5px solid var(--mist);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  cursor: default;
+  transition: border-color .18s, box-shadow .18s;
+}
+.profile-card:hover { border-color: rgba(212,130,10,0.4); box-shadow: 0 2px 10px var(--shadow); }
+
+.pc-top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.pc-icon {
+  font-size: 1rem;
+  color: var(--amber);
+  line-height: 1;
+  min-width: 1.2rem;
+  text-align: center;
+}
+
+.pc-cat {
+  font-weight: 600;
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.urgency-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.urgency-dot.alta    { background: var(--urg-alta); }
+.urgency-dot.normale { background: var(--urg-normale); }
+.urgency-dot.bassa   { background: var(--urg-bassa); }
+
+.pc-addr {
+  font-size: 0.8rem;
+  color: #7a6f60;
+  margin-bottom: 0.4rem;
+  padding-left: 1.7rem;
+}
+
+.pc-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-left: 1.7rem;
+}
+
+.pc-date { font-size: 0.75rem; color: #9a8f80; flex: 1; }
+
+.pc-id {
+  font-size: 0.68rem;
+  color: #b0a898;
+  padding-left: 1.7rem;
+  margin-top: 0.35rem;
+  font-family: monospace;
+  letter-spacing: 0.02em;
+}
+
+/* ── STATUS BADGES ───────────────────────────────────── */
+.stato-badge {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.stato-nuova       { background: rgba(212,130,10,0.12); color: #a06008; }
+.stato-lavorazione { background: rgba(61,90,71,0.12);  color: #3d5a47; }
+.stato-risolta     { background: rgba(46,160,67,0.12); color: #1a7a2e; }
+.stato-chiusa      { background: rgba(120,120,120,0.1);color: #666; }
+
+/* ── CLEAR SECTION ───────────────────────────────────── */
+.clear-section { margin-top: 1.5rem; text-align: center; }
+
+.btn-clear {
+  background: none;
+  border: 1.5px solid rgba(192,57,43,0.3);
+  color: var(--rust);
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 0.85rem;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  transition: border-color .18s, background .18s;
+}
+.btn-clear:hover { border-color: var(--rust); background: rgba(192,57,43,0.06); }
+
+/* ── BOTTOM NAV ──────────────────────────────────────── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: white;
+  border-top: 1px solid var(--mist);
+  display: flex;
+  z-index: 100;
+  box-shadow: 0 -2px 12px rgba(60,40,20,0.08);
+}
+
+.bnav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.25rem;
+  font-size: 0.6rem;
+  font-family: 'Titillium Web', sans-serif;
+  color: rgba(61,47,30,0.4);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  gap: 0.2rem;
+  transition: color .18s;
+}
+.bnav-item i { font-size: 1.1rem; }
+.bnav-item:hover       { color: rgba(61,47,30,0.65); }
+.bnav-item.bnav-active { color: var(--amber); }
+
+/* ── DARK MODE ───────────────────────────────────────── */
+html.dark body      { background: #0f0d0b; color: #f5f0e8; }
+html.dark header    { background: #181410; box-shadow: 0 1px 0 rgba(255,255,255,0.06); }
+html.dark header h1 { color: #f5f0e8; }
+html.dark .btn-back, html.dark .btn-theme {
+  border-color: rgba(255,255,255,0.12); color: #f5f0e8;
+}
+html.dark .btn-back:hover,
+html.dark .btn-theme:hover { border-color: var(--amber); color: var(--amber); }
+html.dark .summary-stat   { background: #1a1410; }
+html.dark .summary-num    { color: #f5f0e8; }
+html.dark .summary-lbl    { color: rgba(245,240,232,0.38); }
+html.dark .summary-stat.resolved .summary-num { color: #4ade80; }
+html.dark .summary-stat.urgent   .summary-num { color: #f87171; }
+html.dark .email-search-toggle   { background: #1a1410; border-color: rgba(255,255,255,0.12); color: #f5f0e8; }
+html.dark .email-search-form     { background: #1a1410; }
+html.dark .email-search-form input { background: #0f0d0b; border-color: rgba(255,255,255,0.12); color: #f5f0e8; }
+html.dark .profile-card          { background: #1a1410; border-color: rgba(255,255,255,0.06); }
+html.dark .profile-card:hover    { border-color: rgba(212,130,10,0.5); }
+html.dark .pc-cat                { color: #f5f0e8; }
+html.dark .pc-addr               { color: rgba(245,240,232,0.38); }
+html.dark .pc-date               { color: rgba(245,240,232,0.28); }
+html.dark .pc-id                 { color: rgba(245,240,232,0.22); }
+html.dark .no-reports            { background: #1a1410; color: rgba(245,240,232,0.4); }
+html.dark .bottom-nav  { background: #181410; border-top-color: rgba(255,255,255,0.08); }
+html.dark .bnav-item   { color: rgba(245,240,232,0.35); }
+html.dark .bnav-item.bnav-active { color: var(--amber); }
+html.dark .search-results-header { color: rgba(245,240,232,0.4); }
+html.dark .search-results-header strong { color: #f5f0e8; }

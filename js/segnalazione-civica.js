@@ -503,6 +503,16 @@ async function sendReport() {
         body: JSON.stringify(payload),
       });
     } catch(e) {}
+
+    // Salva nel profilo locale (localStorage)
+    try {
+      const profilo = JSON.parse(localStorage.getItem('segnalaora_profilo') || '[]');
+      profilo.unshift({ ticketId, token, categoria: cat, catEmoji, indirizzo: addr,
+        data: now.toLocaleDateString('it-IT'),
+        ora: now.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }),
+        urgenza, nome, email: emailSegnalante, stato: 'Nuova' });
+      localStorage.setItem('segnalaora_profilo', JSON.stringify(profilo.slice(0, 50)));
+    } catch(e) {}
   }
 
   // 2. Canali di invio
