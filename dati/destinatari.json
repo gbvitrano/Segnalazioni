@@ -1,0 +1,59 @@
+{
+  "pa": {
+    "nome": "Comune di [NOME COMUNE]",
+    "sito": "https://www.comune.[nome].it",
+    "email_default": "protocollo@comune.[nome].it"
+  },
+  "destinatari": [
+    {
+      "id": "strade",
+      "nome": "Strade e Viabilità",
+      "descrizione": "Buche, dissesti stradali, marciapiedi, segnaletica",
+      "email": "lavori.pubblici@comune.[nome].it",
+      "icon": "🕳️"
+    },
+    {
+      "id": "luce",
+      "nome": "Illuminazione",
+      "descrizione": "Lampioni guasti, cabine elettriche, semafori",
+      "email": "illuminazione@comune.[nome].it",
+      "icon": "💡"
+    },
+    {
+      "id": "rifiuti",
+      "nome": "Rifiuti e Ambiente",
+      "descrizione": "Rifiuti abbandonati, degrado ambientale, inquinamento",
+      "email": "ambiente@comune.[nome].it",
+      "icon": "🗑️"
+    },
+    {
+      "id": "verde",
+      "nome": "Verde Pubblico",
+      "descrizione": "Alberi pericolanti, parchi, aree verdi",
+      "email": "verde@comune.[nome].it",
+      "icon": "🌳"
+    },
+    {
+      "id": "acqua",
+      "nome": "Acqua e Fognature",
+      "descrizione": "Perdite idriche, allagamenti, fognature",
+      "email": "acqua@comune.[nome].it",
+      "icon": "🚰"
+    },
+    {
+      "id": "polizia",
+      "nome": "Polizia Locale",
+      "descrizione": "Sicurezza, veicoli abbandonati, degrado urbano",
+      "email": "polizialocale@comune.[nome].it",
+      "icon": "🚔"
+    },
+    {
+      "id": "altro",
+      "nome": "Altro",
+      "descrizione": "Inserisci l'email del destinatario",
+      "email": null,
+      "custom": true,
+      "icon": "✏️"
+    }
+  ]
+}

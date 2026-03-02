@@ -8,7 +8,7 @@
     <meta name="author" content="Giovan Battista Vitrano per OpenDataSicilia.it">
     <meta http-equiv="content-language" content="IT">
     <meta name="robots" content="index,follow">
-    <meta name="creation_Date" content="01/03/2026>
+    <meta name="creation_Date" content="01/03/2026">
 <title>SegnalaOra — Segnalazioni Civiche</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,800;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -17,8 +17,8 @@
 <script src="https://cdn.jsdelivr.net/npm/exifr/dist/full.umd.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
 <link rel="stylesheet" href="css/segnalazione-civica.css">
-    <link rel="shortcut icon" href="img/favicon.ico"/> 
-    <link rel="icon" href="img/favicon.png" type="image/png"/> 
+    <link rel="shortcut icon" href="img/favicon.ico"/>
+    <link rel="icon" href="img/favicon.png" type="image/png"/>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-87653723-4"></script>
@@ -50,7 +50,6 @@
 <meta name="twitter:image"            content="https://segnalaora.coseerobe.it/img/og-image.jpg" />
 <meta name="twitter:image:alt"        content="SegnalaOra – mappa interattiva delle segnalazioni territoriali" />
 
-
 </head>
 <body>
 
@@ -60,7 +59,7 @@
     <h1>SegnalaOra</h1>
   </div>
   <div class="header-actions">
-    <a href="index.html" class="btn-map-link">🗺 Mappa segnalazioni</a>
+    <a href="index.html" class="btn-map-link">🗺 Mappa</a>
     <button class="btn-info" onclick="openInfo()" title="Informazioni sul progetto">
       <i class="fa-solid fa-circle-info"></i>
     </button>
@@ -78,9 +77,9 @@
     <p><strong>Come funziona:</strong></p>
     <ol>
       <li>Carica una foto del problema — il GPS viene estratto automaticamente dall'immagine</li>
-      <li>Indica la posizione sulla mappa, oppure lascia che il GPS del dispositivo la rilevi</li>
-      <li>Descrivi il problema, scegli la categoria e il livello di urgenza</li>
-      <li>Invia la segnalazione al Comune e condividila su WhatsApp, Twitter o Facebook</li>
+      <li>Verifica la posizione sulla mappa oppure lascia che il GPS del dispositivo la rilevi</li>
+      <li>Scegli a chi inviare, descrivi il problema e inserisci i tuoi dati</li>
+      <li>Invia la segnalazione al Comune — riceverai una conferma via email</li>
     </ol>
     <p>Tutte le segnalazioni sono archiviate automaticamente in Google Sheets e visibili sulla mappa pubblica.</p>
     <div class="credits">
@@ -92,241 +91,164 @@
   </div>
 </div>
 
-<div class="steps-bar">
-  <div class="step active" id="s1"><span class="step-num">1</span> Foto</div>
-  <div class="step-arrow">›</div>
-  <div class="step" id="s2"><span class="step-num">2</span> Posizione</div>
-  <div class="step-arrow">›</div>
-  <div class="step" id="s3"><span class="step-num">3</span> Dettagli</div>
-  <div class="step-arrow">›</div>
-  <div class="step" id="s4"><span class="step-num">4</span> Invia</div>
-</div>
-
 <main>
 
-  <!-- STEP 1: FOTO -->
-  <div class="section-card visible" id="card1">
-    <div class="card-header">
-      <span class="icon">📷</span>
-      <div>
-        <h2>Scatta o carica una foto</h2>
-        <p>La foto documenterà il problema segnalato</p>
-      </div>
+  <!-- ① FOTO -->
+  <section class="form-section">
+    <div class="section-title">📷 Foto del problema</div>
+    <div class="photo-zone" id="photoZone" onclick="document.getElementById('fileInput').click()">
+      <input type="file" id="fileInput" accept="image/*">
+      <span class="big-icon">🖼️</span>
+      <h3>Tocca per scattare o scegliere</h3>
+      <p>JPG, PNG, HEIC · ridimensionata a 1280 px</p>
     </div>
-    <div class="card-body">
-      <div class="photo-zone" id="photoZone" onclick="document.getElementById('fileInput').click()">
-        <input type="file" id="fileInput" accept="image/*">
-        <span class="big-icon">🖼️</span>
-        <h3>Tocca per scattare o scegliere</h3>
-        <p>Accetta: JPG, PNG, HEIC · Ridimensionata a 1280px</p>
-      </div>
-      <div class="photo-preview" id="photoPreview">
-        <img id="previewImg" src="" alt="Anteprima">
-        <button class="change-btn" onclick="document.getElementById('fileInput').click()">✎ Cambia</button>
-      </div>
-
-      <div class="photo-info" id="photoInfo"></div>
-
-      <div class="btn-row" style="margin-top:1rem;">
-        <button class="btn-sm" onclick="openCamera()">📷 Fotocamera</button>
-        <button class="btn-sm" onclick="openGallery()">🗂️ Galleria</button>
-      </div>
-
-      <div class="nav-next">
-        <button class="btn-next" onclick="goStep(2)">Avanti — Posizione →</button>
-      </div>
+    <div class="photo-preview" id="photoPreview">
+      <img id="previewImg" src="" alt="Anteprima">
+      <button class="change-btn" type="button" onclick="document.getElementById('fileInput').click()">✎ Cambia</button>
     </div>
-  </div>
-
-  <!-- STEP 2: MAPPA -->
-  <div class="section-card" id="card2">
-    <div class="card-header">
-      <span class="icon">🗺️</span>
-      <div>
-        <h2>Dove si trova il problema?</h2>
-        <p>Trascina il marker o clicca sulla mappa per riposizionarlo</p>
-      </div>
+    <div class="photo-info" id="photoInfo"></div>
+    <div class="btn-row" style="margin-top:0.8rem">
+      <button class="btn-sm" type="button" onclick="openCamera()">📷 Fotocamera</button>
+      <button class="btn-sm" type="button" onclick="openGallery()">🗂️ Galleria</button>
     </div>
-    <div class="card-body">
-      <div class="geo-status" id="geoStatus">
+  </section>
+
+  <!-- ② POSIZIONE -->
+  <section class="form-section form-section--geo">
+    <button class="geo-bar" type="button" id="geoStatus" onclick="toggleMap()" aria-expanded="false">
+      <div class="geo-bar-left">
         <div class="dot"></div>
-        <span id="geoText">In attesa di posizione...</span>
+        <span id="geoText">In attesa di posizione…</span>
       </div>
-
+      <span class="geo-bar-caret">▾ Mappa</span>
+    </button>
+    <div class="map-collapsible" id="mapCollapsible">
       <div class="exif-banner" id="exifBanner" style="display:none">
         📸 <strong>Posizione estratta dalla foto (EXIF).</strong> Verifica che il marker corrisponda al luogo del problema. Se non è corretto, trascinalo nella posizione giusta.
-        <button class="exif-banner-btn" onclick="dismissExifBanner()">📡 Usa GPS del dispositivo invece</button>
+        <button class="exif-banner-btn" type="button" onclick="dismissExifBanner()">📡 Usa GPS del dispositivo invece</button>
       </div>
-
       <div id="map"></div>
-
       <label>Indirizzo rilevato</label>
       <input type="text" id="addressInput" placeholder="Via/Piazza, Numero Civico — Città">
-
       <div class="btn-row">
-        <button class="btn-sm" onclick="getGPS()">📡 Usa GPS</button>
-        <button class="btn-sm" onclick="useExifGps()" id="btnExif" style="display:none">📸 Da foto EXIF</button>
-      </div>
-
-      <div class="nav-next">
-        <button class="btn-next" onclick="goStep(3)">Avanti — Dettagli →</button>
+        <button class="btn-sm" type="button" onclick="getGPS()">📡 Usa GPS</button>
+        <button class="btn-sm" type="button" onclick="useExifGps()" id="btnExif" style="display:none">📸 Da foto EXIF</button>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- STEP 3: DETTAGLI -->
-  <div class="section-card" id="card3">
-    <div class="card-header">
-      <span class="icon">📝</span>
-      <div>
-        <h2>Descrivi il problema</h2>
-        <p>Più dettagli fornisci, più rapida sarà la risposta</p>
-      </div>
+  <!-- ③ DESTINATARIO -->
+  <section class="form-section">
+    <div class="section-title">📤 A chi segnali?</div>
+    <div class="dest-grid" id="destGrid">
+      <!-- Popolato da JS da dati/destinatari.json -->
     </div>
-    <div class="card-body">
-
-      <label>Categoria segnalazione *</label>
-      <div class="select-wrap">
-        <select id="categoria" onchange="updatePreview(); updateCatHint()">
-          <option value="">— Seleziona categoria —</option>
-          <option value="Buche e dissesti stradali"     title="Buche, avvallamenti, asfalto deteriorato, ostacoli sul manto stradale">🕳️ Buche e dissesti stradali</option>
-          <option value="Illuminazione pubblica guasta" title="Lampioni spenti, cavi scoperti, impianti elettrici non funzionanti">💡 Illuminazione pubblica guasta</option>
-          <option value="Rifiuti abbandonati"           title="Discariche abusive, sacchi abbandonati, ingombranti lasciati in strada">🗑️ Rifiuti abbandonati</option>
-          <option value="Alberi e verde pubblico"       title="Alberi pericolanti, rami caduti, parchi trascurati, erba alta">🌳 Alberi e verde pubblico</option>
-          <option value="Perdite idriche"               title="Tubature rotte, allagamenti da rete idrica, fontane guaste">🚰 Perdite idriche</option>
-          <option value="Deiezioni non raccolte"        title="Deiezioni di animali non rimosse su marciapiedi o aree pubbliche">🐕 Deiezioni non raccolte</option>
-          <option value="Segnaletica danneggiata"       title="Cartelli stradali mancanti, segnaletica orizzontale sbiadita, semafori guasti">🚧 Segnaletica danneggiata</option>
-          <option value="Immobile pericolante"          title="Edifici con parti distaccate, balconi pericolanti, facciate in crollo">🏚️ Immobile pericolante</option>
-          <option value="Barriere architettoniche"      title="Ostacoli per persone disabili: rampe mancanti, ascensori guasti, marciapiedi non accessibili">♿ Barriere architettoniche</option>
-          <option value="Inquinamento acustico"         title="Rumori molesti, cantieri fuori orario, impianti rumorosi in aree residenziali">🔊 Inquinamento acustico</option>
-          <option value="Veicoli abbandonati"           title="Auto, moto o bici abbandonate su suolo pubblico da molti giorni">🛺 Veicoli abbandonati</option>
-          <option value="Degrado e sicurezza"           title="Spaccio, vandalismi, graffiti, bivacchi, situazioni di degrado urbano">💊 Degrado e sicurezza</option>
-          <option value="Altro"                         title="Problemi non rientranti nelle categorie precedenti">📦 Altro</option>
-        </select>
-      </div>
-      <small class="cat-hint" id="catHint"></small>
-
-      <label>Urgenza</label>
-      <div class="select-wrap">
-        <select id="urgenza" onchange="updatePreview()">
-          <option value="Normale">🟡 Normale</option>
-          <option value="Alta">🔴 Alta — pericolo immediato</option>
-          <option value="Bassa">🟢 Bassa — segnalazione informativa</option>
-        </select>
-      </div>
-
-      <label>Descrizione (opzionale)</label>
-      <textarea id="descr" placeholder="Es: La buca si trova all'angolo con Via Roma, è larga circa 40cm..." oninput="updatePreview()"></textarea>
-
-      <label>Nome o Nickname *</label>
-      <input type="text" id="nome" placeholder="Il tuo nome o nickname" oninput="updatePreview(); clearFieldError('nome')" required>
-      <div class="field-error" id="nome-error">Inserisci il tuo nome o nickname.</div>
-
-      <label>Email * <span style="font-weight:300;font-size:0.75rem;">(ricevi la conferma di invio)</span></label>
-      <input type="email" id="email" placeholder="tua@email.it" required
-        oninput="onEmailInput()"
-        onblur="validateEmailField()">
-      <div class="field-error" id="email-error">Inserisci un indirizzo email valido (es: nome@dominio.it).</div>
-
-      <div class="nav-next">
-        <button class="btn-next" onclick="goStep(4)">Avanti — Destinatari →</button>
-      </div>
+    <div class="custom-email-row" id="customEmailRow" style="display:none">
+      <label>Email destinatario</label>
+      <input type="email" id="customEmail" placeholder="ufficio@comune.it" oninput="onCustomEmailInput()">
+      <div class="field-error" id="customEmail-error">Inserisci un indirizzo email valido.</div>
     </div>
-  </div>
+    <div class="field-error" id="dest-error">⚠️ Seleziona a chi inviare la segnalazione.</div>
+  </section>
 
-  <!-- STEP 4: INVIA -->
-  <div class="section-card" id="card4">
-    <div class="card-header">
-      <span class="icon">📤</span>
-      <div>
-        <h2>Scegli dove inviare</h2>
-        <p>Seleziona l'area amministrativa e/o un canale social</p>
-      </div>
+  <!-- ④ DETTAGLI -->
+  <section class="form-section">
+    <div class="section-title">📝 Descrivi il problema</div>
+
+    <label>Categoria *</label>
+    <div class="select-wrap">
+      <select id="categoria" onchange="updateCatHint(); clearFieldError('categoria')">
+        <option value="">— Seleziona categoria —</option>
+        <option value="Buche e dissesti stradali"     title="Buche, avvallamenti, asfalto deteriorato, ostacoli sul manto stradale">🕳️ Buche e dissesti stradali</option>
+        <option value="Illuminazione pubblica guasta" title="Lampioni spenti, cavi scoperti, impianti elettrici non funzionanti">💡 Illuminazione pubblica guasta</option>
+        <option value="Rifiuti abbandonati"           title="Discariche abusive, sacchi abbandonati, ingombranti lasciati in strada">🗑️ Rifiuti abbandonati</option>
+        <option value="Alberi e verde pubblico"       title="Alberi pericolanti, rami caduti, parchi trascurati, erba alta">🌳 Alberi e verde pubblico</option>
+        <option value="Perdite idriche"               title="Tubature rotte, allagamenti da rete idrica, fontane guaste">🚰 Perdite idriche</option>
+        <option value="Deiezioni non raccolte"        title="Deiezioni di animali non rimosse su marciapiedi o aree pubbliche">🐕 Deiezioni non raccolte</option>
+        <option value="Segnaletica danneggiata"       title="Cartelli stradali mancanti, segnaletica orizzontale sbiadita, semafori guasti">🚧 Segnaletica danneggiata</option>
+        <option value="Immobile pericolante"          title="Edifici con parti distaccate, balconi pericolanti, facciate in crollo">🏚️ Immobile pericolante</option>
+        <option value="Barriere architettoniche"      title="Ostacoli per persone disabili: rampe mancanti, ascensori guasti, marciapiedi non accessibili">♿ Barriere architettoniche</option>
+        <option value="Inquinamento acustico"         title="Rumori molesti, cantieri fuori orario, impianti rumorosi in aree residenziali">🔊 Inquinamento acustico</option>
+        <option value="Veicoli abbandonati"           title="Auto, moto o bici abbandonate su suolo pubblico da molti giorni">🛺 Veicoli abbandonati</option>
+        <option value="Degrado e sicurezza"           title="Spaccio, vandalismi, graffiti, bivacchi, situazioni di degrado urbano">💊 Degrado e sicurezza</option>
+        <option value="Altro"                         title="Problemi non rientranti nelle categorie precedenti">📦 Altro</option>
+      </select>
     </div>
-    <div class="card-body">
+    <small class="cat-hint" id="catHint"></small>
+    <div class="field-error" id="categoria-error">Seleziona una categoria.</div>
 
-      <label>Destinatario principale (A:)</label>
-      <div class="select-wrap">
-        <select id="areaSelect" onchange="updateAreaInfo(); this.classList.remove('invalid'); document.getElementById('areaSelect-error').classList.remove('visible');">
-          <option value="">— Seleziona area —</option>
-        </select>
-      </div>
-      <small class="field-hint">Seleziona l'ufficio o la società a cui inviare la segnalazione</small>
-      <div class="field-error" id="areaSelect-error">⚠️ Seleziona almeno un destinatario prima di inviare.</div>
-      <div class="area-info" id="areaInfo"></div>
-
-      <div class="cc-section">
-        <label class="cc-label">Per conoscenza (CC)</label>
-        <div class="cc-add-row">
-          <div class="select-wrap">
-            <select id="ccAreaSelect">
-              <option value="">— Aggiungi area dalla lista —</option>
-            </select>
-          </div>
-          <button class="btn-add-cc" type="button" onclick="addAreaAsCC()">+ Aggiungi</button>
-        </div>
-        <div class="cc-tags" id="ccTags"></div>
-        <input type="text" id="ccCustomEmails"
-          placeholder="Oppure inserisci email@comune.it, altra@email.it …"
-          oninput="updatePreview()">
-        <small class="field-hint">Separa più indirizzi con virgola o punto e virgola</small>
-      </div>
-
-      <label>Condividi sui social</label>
-      <div class="select-wrap">
-        <select id="socialSelect">
-          <option value="">— Nessuno —</option>
-        </select>
-      </div>
-
-      <label style="margin-top:1.5rem">Anteprima messaggio</label>
-      <div class="preview-box" id="previewBox">
-        Compila i dettagli nei passi precedenti per vedere il messaggio.
-      </div>
-
-      <button class="send-btn" id="sendBtn" onclick="sendReport()">
-        ✉️ Invia Segnalazione
-      </button>
+    <label>Urgenza</label>
+    <div class="select-wrap">
+      <select id="urgenza">
+        <option value="Normale">🟡 Normale</option>
+        <option value="Alta">🔴 Alta — pericolo immediato</option>
+        <option value="Bassa">🟢 Bassa — segnalazione informativa</option>
+      </select>
     </div>
-  </div>
 
-  <!-- SUCCESS -->
-  <div class="section-card" id="cardSuccess">
-    <div class="success-card">
-      <span class="success-icon">✅</span>
-      <h2>Segnalazione inviata!</h2>
-      <p>Il tuo report è stato trasmesso. Riceverai una conferma via email. Conserva l'ID per seguire l'evoluzione.</p>
-      <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-bottom:1.5rem;">
-        <div class="tag-id" id="ticketId" style="margin-bottom:0">SGN-000000</div>
-        <button id="copyIdBtn" onclick="copyTicketId()" title="Copia ID"
-          style="background:none;border:1px solid rgba(26,18,8,0.25);border-radius:6px;padding:0.3rem 0.6rem;cursor:pointer;font-size:0.8rem;font-family:'DM Sans',sans-serif;">
-          📋 Copia
-        </button>
-      </div>
-      <div class="token-row">
-        <span class="token-label">🔑 Token risoluzione:</span>
-        <span class="token-val" id="resolveToken">—</span>
-        <button id="copyTokenBtn" onclick="copyToken()" class="copy-btn-small" title="Copia token">📋 Copia</button>
-      </div>
-      <p class="token-hint">Conserva questo codice: serve alla PA per marcare la segnalazione come risolta.</p>
-      <div class="warn-banner" id="emailWarnBanner" style="display:none">
-        ⚠️ <strong>Nota:</strong> il messaggio email si apre nel tuo client di posta. Verifica di averlo inviato prima di chiudere.
-      </div>
-      <p id="successDetail" style="margin-bottom:0.5rem;"></p>
-      <div class="channels-sent" id="channelsSent"></div>
-      <div class="copy-reminder" id="copyReminder">
-        💡 Hai copiato il tuo ID segnalazione? Ne avrai bisogno per seguire l'evoluzione.
-        <button class="copy-reminder-close" onclick="forceClose()">Chiudi comunque</button>
-      </div>
-      <br>
-      <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
-        <button class="btn-next" onclick="resetAll()" style="margin:0;">+ Nuova segnalazione</button>
-        <button onclick="closeSuccess()" style="margin:0;padding:0.75rem 1.5rem;border-radius:12px;border:1.5px solid rgba(26,18,8,0.25);background:transparent;font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:500;cursor:pointer;color:var(--ink);">✕ Chiudi</button>
-      </div>
-    </div>
-  </div>
+    <label>Descrizione (opzionale)</label>
+    <textarea id="descr" placeholder="Es: La buca si trova all'angolo con Via Roma, è larga circa 40 cm…"></textarea>
+  </section>
+
+  <!-- ⑤ MITTENTE -->
+  <section class="form-section">
+    <div class="section-title">👤 I tuoi dati</div>
+
+    <label>Nome o Nickname *</label>
+    <input type="text" id="nome" placeholder="Il tuo nome o nickname" oninput="clearFieldError('nome')" required>
+    <div class="field-error" id="nome-error">Inserisci il tuo nome o nickname.</div>
+
+    <label>Email * <span class="label-note">(ricevi la conferma di invio)</span></label>
+    <input type="email" id="email" placeholder="tua@email.it" required
+      oninput="onEmailInput()"
+      onblur="validateEmailField()">
+    <div class="field-error" id="email-error">Inserisci un indirizzo email valido (es: nome@dominio.it).</div>
+  </section>
+
+  <!-- ⑥ INVIA -->
+  <section class="form-section form-section--send">
+    <button class="send-btn" id="sendBtn" type="button" onclick="sendReport()">
+      ✉️ Invia Segnalazione
+    </button>
+  </section>
 
 </main>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <span class="success-icon">✅</span>
+    <h2>Segnalazione inviata!</h2>
+    <p>Il tuo report è stato trasmesso. Riceverai una conferma via email. Conserva l'ID per seguire l'evoluzione.</p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-bottom:1.5rem;">
+      <div class="tag-id" id="ticketId" style="margin-bottom:0">SGN-000000</div>
+      <button id="copyIdBtn" type="button" onclick="copyTicketId()" title="Copia ID"
+        style="background:none;border:1px solid rgba(26,18,8,0.25);border-radius:6px;padding:0.3rem 0.6rem;cursor:pointer;font-size:0.8rem;font-family:'DM Sans',sans-serif;">
+        📋 Copia
+      </button>
+    </div>
+    <div class="token-row">
+      <span class="token-label">🔑 Token risoluzione:</span>
+      <span class="token-val" id="resolveToken">—</span>
+      <button id="copyTokenBtn" type="button" onclick="copyToken()" class="copy-btn-small" title="Copia token">📋 Copia</button>
+    </div>
+    <p class="token-hint">Conserva questo codice: serve alla PA per marcare la segnalazione come risolta.</p>
+    <div class="warn-banner" id="emailWarnBanner" style="display:none">
+      ⚠️ <strong>Nota:</strong> il messaggio email si apre nel tuo client di posta. Verifica di averlo inviato prima di chiudere.
+    </div>
+    <p id="successDetail" style="margin-bottom:0.5rem;"></p>
+    <div class="channels-sent" id="channelsSent"></div>
+    <div class="copy-reminder" id="copyReminder">
+      💡 Hai copiato il tuo ID segnalazione? Ne avrai bisogno per seguire l'evoluzione.
+      <button class="copy-reminder-close" type="button" onclick="forceClose()">Chiudi comunque</button>
+    </div>
+    <br>
+    <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+      <button class="btn-next" type="button" onclick="resetAll()" style="margin:0;">+ Nuova segnalazione</button>
+      <button type="button" onclick="closeSuccess()" style="margin:0;padding:0.75rem 1.5rem;border-radius:12px;border:1.5px solid rgba(26,18,8,0.25);background:transparent;font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:500;cursor:pointer;color:var(--ink);">✕ Chiudi</button>
+    </div>
+  </div>
+</div>
 
 <script src="js/segnalazione-civica.js"></script>
 </body>
