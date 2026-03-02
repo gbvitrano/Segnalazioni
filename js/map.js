@@ -265,6 +265,8 @@ function setViewMode(mode) {
   document.getElementById('tabAperte').classList.toggle('active', mode === 'aperte');
   document.getElementById('tabRisolte').classList.toggle('active', mode === 'risolte');
   document.getElementById('tabRisolte').classList.toggle('active-resolved', mode === 'risolte');
+  document.getElementById('statsAperte').style.display  = mode === 'aperte'  ? '' : 'none';
+  document.getElementById('statsRisolte').style.display = mode === 'risolte' ? '' : 'none';
   document.getElementById('filtersPanel').style.display = mode === 'risolte' ? 'none' : '';
   loadData();
 }
@@ -290,12 +292,13 @@ function renderAll() {
 }
 
 function updateStats() {
-  const tot  = allReports.length;
-  const wait = allReports.filter(r => r.Stato === 'Nuova' || r.Stato === 'In lavorazione').length;
-  const res  = allReports.filter(r => r.Stato === 'Risolta').length;
-  document.getElementById('statTot').textContent  = tot;
-  document.getElementById('statWait').textContent = wait;
-  document.getElementById('statRes').textContent  = res;
+  if (viewMode === 'risolte') {
+    document.getElementById('statRes').textContent = allReports.length;
+  } else {
+    document.getElementById('statNuove').textContent = allReports.filter(r => r.Stato === 'Nuova').length;
+    document.getElementById('statLav').textContent   = allReports.filter(r => r.Stato === 'In lavorazione').length;
+    document.getElementById('statTot').textContent   = allReports.length;
+  }
 }
 
 const URGENCY_COLORS = { Alta: '#e53535', Normale: '#ff9900', Bassa: '#3cb4d8' };

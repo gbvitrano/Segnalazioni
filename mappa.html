@@ -155,15 +155,23 @@
   <!-- PANNELLO -->
   <div class="side-panel">
     <div class="panel-header">
-      <div class="stats-row">
-        <div class="stat-box">
-          <span class="stat-num" id="statTot">—</span>
-          <span class="stat-lbl">Totali</span>
-        </div>
+      <!-- Stats vista Aperte (default) -->
+      <div class="stats-row" id="statsAperte">
         <div class="stat-box urgent">
-          <span class="stat-num" id="statWait">—</span>
+          <span class="stat-num" id="statNuove">—</span>
           <span class="stat-lbl">Aperte</span>
         </div>
+        <div class="stat-box">
+          <span class="stat-num" id="statLav">—</span>
+          <span class="stat-lbl">Lavorazione</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-num" id="statTot">—</span>
+          <span class="stat-lbl">Totale</span>
+        </div>
+      </div>
+      <!-- Stats vista Risolte -->
+      <div class="stats-row" id="statsRisolte" style="display:none">
         <div class="stat-box resolved">
           <span class="stat-num" id="statRes">—</span>
           <span class="stat-lbl">Risolte</span>
