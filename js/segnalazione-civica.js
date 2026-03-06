@@ -94,16 +94,21 @@ function selectDest(id) {
   const dest = _destinatari.find(d => d.id === id);
   if (!dest) return;
 
-  const idx = _selectedDests.findIndex(d => d.id === id);
-  if (idx === -1) {
+  const alreadySelected = _selectedDests.some(d => d.id === id);
+
+  // Deseleziona tutto (selezione singola — comportamento radio button)
+  _selectedDests.forEach(d => {
+    document.getElementById('dest-' + d.id)?.classList.remove('selected');
+  });
+  _selectedDests = [];
+
+  // Se non era già selezionato, seleziona quello cliccato
+  if (!alreadySelected) {
     _selectedDests.push(dest);
     document.getElementById('dest-' + id).classList.add('selected');
-  } else {
-    _selectedDests.splice(idx, 1);
-    document.getElementById('dest-' + id).classList.remove('selected');
   }
 
-  // Mostra campo email custom solo se "Altro" è tra i selezionati
+  // Mostra campo email custom solo se "Altro" è selezionato
   const hasCustom = _selectedDests.some(d => d.custom);
   const customRow = document.getElementById('customEmailRow');
   if (customRow) customRow.style.display = hasCustom ? 'block' : 'none';
