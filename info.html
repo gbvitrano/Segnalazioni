@@ -125,6 +125,21 @@
     </div>
   </section>
 
+  <section class="info-section">
+    <h2><i class="fa-solid fa-shield-halved"></i> Privacy &amp; Cookie</h2>
+    <p>SegnalaOra tratta i dati personali degli utenti nel rispetto del <strong>GDPR 2016/679</strong> e del D.Lgs. 196/2003. I dati inseriti nel modulo di segnalazione (nome, email, posizione, foto) sono utilizzati esclusivamente per la gestione delle segnalazioni civiche.</p>
+    <div class="info-links" style="margin-top:0.75rem">
+      <a href="privacy.html" class="info-link-card">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>Privacy Policy &amp; Cookie</span>
+      </a>
+      <a href="privacy.html" class="info-link-card" onclick="event.preventDefault();cookieShowSettings()">
+        <i class="fa-solid fa-cookie-bite"></i>
+        <span>Impostazioni cookie</span>
+      </a>
+    </div>
+  </section>
+
   <section class="info-section info-credits">
     <strong>Idea di</strong> Andrea Borruso, Salvatore Fiandaca, Ciro Spataro e Giovan Battista Vitrano<br>
     By <a href="https://opendatasicilia.it" target="_blank" rel="noopener">@opendatasicilia</a><br><br> 
@@ -137,6 +152,18 @@
   </section>
 
 </main>
+
+<!-- Cookie Banner -->
+<div id="cookieBanner" class="cookie-banner" style="display:none">
+  <div class="cookie-banner__content">
+    <p><i class="fa-solid fa-cookie-bite"></i> Utilizziamo cookie analitici per migliorare il sito. Leggi la <a href="privacy.html">Privacy Policy</a>.</p>
+    <div class="cookie-banner__actions">
+      <button class="cookie-btn cookie-btn--accept" onclick="cookieAccept()">Accetta</button>
+      <button class="cookie-btn cookie-btn--refuse" onclick="cookieRefuse()">Rifiuta</button>
+    </div>
+  </div>
+</div>
+<script src="js/cookie-consent.js"></script>
 
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">

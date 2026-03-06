@@ -2505,3 +2505,97 @@ html.dark body.page-info .info-credits strong { color: #f5f0e8; }
 html.dark body.page-info .bottom-nav { background: #181410; border-top-color: rgba(255,255,255,0.08); box-shadow: none; }
 html.dark body.page-info .bnav-item   { color: rgba(245,240,232,0.35); }
 html.dark body.page-info .bnav-item.bnav-active { color: var(--amber); }
+
+/* ═══════════════════════════════════════════════════════
+   COOKIE BANNER (globale — tutte le pagine)
+   ═══════════════════════════════════════════════════════ */
+.cookie-banner {
+  position: fixed;
+  bottom: 4.5rem; /* sopra la bottom nav */
+  left: 0; right: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  padding: 0 0.75rem;
+  pointer-events: none;
+}
+.cookie-banner__content {
+  background: #1a1208;
+  color: #f5f0e8;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.28);
+  padding: 1rem 1.25rem;
+  max-width: 640px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  pointer-events: all;
+  flex-wrap: wrap;
+}
+.cookie-banner__content p {
+  flex: 1;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0;
+  color: rgba(245,240,232,0.88);
+}
+.cookie-banner__content p i { color: var(--amber); margin-right: 0.3rem; }
+.cookie-banner__content a { color: var(--amber); text-decoration: underline; }
+.cookie-banner__actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+.cookie-btn {
+  padding: 0.45rem 1rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: 'Titillium Web', sans-serif;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+}
+.cookie-btn--accept {
+  background: var(--amber);
+  color: #fff;
+}
+.cookie-btn--accept:hover { background: #b86f07; }
+.cookie-btn--refuse {
+  background: rgba(245,240,232,0.12);
+  color: rgba(245,240,232,0.75);
+  border: 1px solid rgba(245,240,232,0.18);
+}
+.cookie-btn--refuse:hover { background: rgba(245,240,232,0.2); }
+
+/* Privacy footer link */
+.privacy-footer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: rgba(26,18,8,0.4);
+  padding: 0.5rem 1rem 0.25rem;
+}
+.privacy-footer a { color: rgba(26,18,8,0.45); text-decoration: underline; }
+.privacy-footer a:hover { color: var(--amber); }
+html.dark .privacy-footer { color: rgba(245,240,232,0.3); }
+html.dark .privacy-footer a { color: rgba(245,240,232,0.35); }
+
+/* Consent checkbox nel form */
+.consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  color: rgba(26,18,8,0.55);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+.consent-row input[type="checkbox"] {
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+  accent-color: var(--amber);
+  width: 15px; height: 15px;
+}
+.consent-row a { color: var(--amber); text-decoration: underline; }
+html.dark .consent-row { color: rgba(245,240,232,0.45); }

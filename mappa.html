@@ -22,14 +22,7 @@
 <script src="js/theme.js"></script> 
 
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-87653723-4"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-87653723-4');
-    </script>
+    <!-- Google Analytics — caricato solo dopo consenso via cookie-consent.js -->
 
     <!-- Open Graph / Facebook -->
 <meta property="og:type"              content="website" />
@@ -180,6 +173,18 @@
 </div><!-- /app-body -->
 
 <script src="js/map.js"></script>
+
+<!-- Cookie Banner -->
+<div id="cookieBanner" class="cookie-banner" style="display:none">
+  <div class="cookie-banner__content">
+    <p><i class="fa-solid fa-cookie-bite"></i> Utilizziamo cookie analitici per migliorare il sito. Leggi la <a href="privacy.html">Privacy Policy</a>.</p>
+    <div class="cookie-banner__actions">
+      <button class="cookie-btn cookie-btn--accept" onclick="cookieAccept()">Accetta</button>
+      <button class="cookie-btn cookie-btn--refuse" onclick="cookieRefuse()">Rifiuta</button>
+    </div>
+  </div>
+</div>
+<script src="js/cookie-consent.js"></script>
 
 <!-- BOTTOM NAV mobile (nascosta su desktop) -->
 <nav class="bottom-nav">
