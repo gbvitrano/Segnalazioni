@@ -241,6 +241,45 @@
 </div>
 <script src="js/cookie-consent.js"></script>
 
+<!-- INFO POPUP -->
+<div class="info-overlay" id="infoOverlay">
+  <div class="info-card">
+    <button class="info-close" type="button" onclick="closeInfoPopup()" title="Chiudi"><i class="fa-solid fa-xmark"></i></button>
+    <div class="info-card__icon"><i class="fa-solid fa-location-dot"></i></div>
+    <h2 class="info-card__title">🔔 SegnalaOra</h2>
+    <div class="info-card__body">
+      <p>SegnalaOra è una web app leggera per la raccolta di segnalazioni dal territorio, pensata per facilitare il dialogo tra cittadini e realtà locali.</p>
+      <p>Il funzionamento è semplice e diretto: tramite un form web è possibile segnalare un problema, descriverlo, indicare il luogo e allegare una foto. Nessuna app da installare, nessuna barriera tecnica: basta un browser. Un approccio che la rende particolarmente adatta a piccoli comuni, associazioni, comitati civici o gruppi informali che vogliono attivare un canale di ascolto strutturato ma sostenibile.</p>
+      <p>Un elemento importante è che SegnalaOra è un progetto <strong>open source</strong>, quindi riutilizzabile (<strong>CC BY 4.0</strong>) e adattabile a contesti diversi: chiunque può studiarne il codice, personalizzarlo e riusarlo secondo le proprie esigenze. Questa scelta è coerente con la cultura dell'open government e dell'open data promossa dalla comunità <strong>OpenDataSicilia</strong>, iniziativa civica che da anni lavora su strumenti aperti, collaborazione e partecipazione dal basso.</p>
+      <p class="info-card__highlight">💡 In sintesi, SegnalaOra non è solo uno strumento tecnico, ma un esempio concreto di come software open source e cittadinanza attiva possano incontrarsi per migliorare la cura del territorio, anche con poche risorse.</p>
+    </div>
+    <button class="btn-next" type="button" onclick="closeInfoPopup()" style="margin:0;width:100%;"><i class="fa-solid fa-check"></i> Ho capito, inizia</button>
+  </div>
+</div>
+<style>
+.info-overlay{position:fixed;inset:0;background:rgba(26,18,8,.55);backdrop-filter:blur(4px);z-index:9000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .25s}
+.info-overlay.is-open{opacity:1;pointer-events:all}
+.info-card{position:relative;background:var(--paper,#f5f0e8);border-radius:20px;padding:2rem 1.75rem 1.75rem;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,.25)}
+.info-close{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--ink,#1a1208);opacity:.5;line-height:1}
+.info-close:hover{opacity:1}
+.info-card__icon{font-size:2.5rem;color:var(--amber,#d4820a);margin-bottom:.5rem;text-align:center}
+.info-card__title{font-family:'Fraunces','Titillium Web',sans-serif;font-size:1.5rem;font-weight:700;color:var(--ink,#1a1208);margin:0 0 1.25rem;text-align:center}
+.info-card__body p{font-size:.95rem;line-height:1.65;color:var(--ink,#1a1208);margin-bottom:.9rem}
+.info-card__body p:last-child{margin-bottom:1.25rem}
+.info-card__highlight{background:rgba(212,130,10,.12);border-left:3px solid var(--amber,#d4820a);border-radius:0 8px 8px 0;padding:.75rem 1rem !important}
+</style>
+<script>
+(function(){
+  if(!sessionStorage.getItem('infoShown')){
+    document.getElementById('infoOverlay').classList.add('is-open');
+  }
+})();
+function closeInfoPopup(){
+  sessionStorage.setItem('infoShown','1');
+  document.getElementById('infoOverlay').classList.remove('is-open');
+}
+</script>
+
 <!-- BOTTOM NAV mobile -->
 <nav class="bottom-nav">
   <button class="bnav-item bnav-active" type="button">
