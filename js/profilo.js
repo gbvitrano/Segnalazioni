@@ -242,6 +242,8 @@ function resolveReport(btn) {
     btn.previousElementSibling.classList.remove('input-invalid');
   }
 
+  if (!confirm('Sei sicuro di voler segnare questa segnalazione come risolta?\nQuesta operazione non può essere annullata.')) return;
+
   btn.disabled = true;
   btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Invio…';
   msg.className   = 'resolve-inline-msg';
