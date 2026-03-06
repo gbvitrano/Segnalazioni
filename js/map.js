@@ -288,6 +288,7 @@ function applyFilters() {
 // ─────────────────────────────────────────────────────────
 function renderAll() {
   filteredReports = applyFilters();
+  currentPage = 1;
   updateStats();
   renderMarkers();
   renderList();
@@ -403,8 +404,12 @@ function renderList() {
     return;
   }
 
+  const totalPages = Math.ceil(filteredReports.length / PAGE_SIZE);
+  const start      = (currentPage - 1) * PAGE_SIZE;
+  const pageItems  = filteredReports.slice(start, start + PAGE_SIZE);
+
   list.innerHTML = '';
-  filteredReports.forEach(r => {
+  pageItems.forEach(r => {
     const addrShort = r.Via || r.Comune || r.Indirizzo_Completo || 'Posizione non specificata';
     const urg = (r.Urgenza || 'Normale').toLowerCase();
     const el = document.createElement('div');
@@ -424,6 +429,28 @@ function renderList() {
     el.addEventListener('click', () => focusReport(r.ID_Segnalazione));
     list.appendChild(el);
   });
+
+  if (totalPages > 1) {
+    const pag = document.createElement('div');
+    pag.className = 'list-pagination';
+    pag.innerHTML = `
+      <button class="lpag-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <span class="lpag-info">${currentPage} / ${totalPages}</span>
+      <button class="lpag-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>`;
+    list.appendChild(pag);
+  }
+}
+
+function goToPage(page) {
+  const totalPages = Math.ceil(filteredReports.length / PAGE_SIZE);
+  if (page < 1 || page > totalPages) return;
+  currentPage = page;
+  renderList();
+  document.getElementById('reportList').scrollTop = 0;
 }
 
 function focusReport(id) {
@@ -446,6 +473,11 @@ function focusReport(id) {
 }
 
 function highlightListItem(id) {
+  const idx = filteredReports.findIndex(r => r.ID_Segnalazione === id);
+  if (idx !== -1) {
+    const page = Math.floor(idx / PAGE_SIZE) + 1;
+    if (page !== currentPage) { currentPage = page; renderList(); }
+  }
   document.querySelectorAll('.report-item').forEach(el => el.classList.remove('highlighted'));
   const el = document.getElementById('ri-' + id);
   if (el) {
