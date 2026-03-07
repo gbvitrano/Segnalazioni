@@ -96,23 +96,35 @@ function selectDest(id) {
 
   const alreadySelected = _selectedDests.some(d => d.id === id);
 
-  // Deseleziona tutto (selezione singola — comportamento radio button)
-  _selectedDests.forEach(d => {
-    document.getElementById('dest-' + d.id)?.classList.remove('selected');
-  });
-  _selectedDests = [];
-
-  // Se non era già selezionato, seleziona quello cliccato
-  if (!alreadySelected) {
-    _selectedDests.push(dest);
-    document.getElementById('dest-' + id).classList.add('selected');
+  if (dest.custom) {
+    // "Altro" è un toggle indipendente — secondo destinatario opzionale
+    if (alreadySelected) {
+      _selectedDests = _selectedDests.filter(d => d.id !== id);
+      document.getElementById('dest-' + id)?.classList.remove('selected');
+    } else {
+      _selectedDests.push(dest);
+      document.getElementById('dest-' + id).classList.add('selected');
+    }
+  } else {
+    // Destinatari normali: radio (uno solo alla volta)
+    _selectedDests.filter(d => !d.custom).forEach(d => {
+      document.getElementById('dest-' + d.id)?.classList.remove('selected');
+    });
+    _selectedDests = _selectedDests.filter(d => d.custom); // mantieni Altro se selezionato
+    if (!alreadySelected) {
+      _selectedDests.push(dest);
+      document.getElementById('dest-' + id).classList.add('selected');
+    }
   }
 
-  // Mostra campo email custom solo se "Altro" è selezionato
+  // Mostra/nascondi campi email e categoria per "Altro"
   const hasCustom = _selectedDests.some(d => d.custom);
-  const customRow = document.getElementById('customEmailRow');
-  if (customRow) customRow.style.display = hasCustom ? 'block' : 'none';
-  if (!hasCustom) clearFieldError('customEmail');
+  document.getElementById('customEmailRow').style.display = hasCustom ? 'block' : 'none';
+  document.getElementById('customCatRow').style.display   = hasCustom ? 'block' : 'none';
+  if (!hasCustom) {
+    clearFieldError('customEmail');
+    clearFieldError('customCat');
+  }
 
   document.getElementById('dest-error').classList.remove('visible');
 }
@@ -439,6 +451,11 @@ async function sendReport() {
     } else {
       toEmails.push(customEmail);
     }
+    const customCat = document.getElementById('customCat').value.trim();
+    if (!customCat) {
+      showFieldError('customCat', 'Descrivi brevemente la categoria del problema.');
+      hasError = true;
+    }
   }
 
   if (!descr) {
@@ -488,8 +505,9 @@ async function sendReport() {
     ? crypto.randomUUID()
     : 'xxxx-xxxx-xxxx-xxxx'.replace(/x/g, () => (Math.random() * 16 | 0).toString(16));
 
+  const customCatValue = document.getElementById('customCat')?.value.trim() || '';
   const cat      = _selectedDests.length > 0
-    ? _selectedDests.map(d => d.categoria || d.nome).join(', ')
+    ? _selectedDests.map(d => d.custom ? (customCatValue || 'Altro') : (d.categoria || d.nome)).join(', ')
     : 'Altro';
   const catEmoji = _selectedDests.length > 0 ? _selectedDests[0].icon : '📌';
   const urgenza  = document.getElementById('urgenza').value;

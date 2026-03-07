@@ -113,14 +113,20 @@
   <!-- ③ DESTINATARIO -->
   <section class="form-section">
     <div class="section-title"><i class="fa-solid fa-paper-plane"></i> A chi segnali?</div>
+    <p class="section-hint">Seleziona il destinatario principale. Se il problema non è in elenco, aggiungi anche <strong>Altro</strong>.</p>
     <div class="dest-grid" id="destGrid">
       <!-- Popolato da JS da dati/destinatari.json -->
     </div>
     <button type="button" class="cat-expand-btn" id="destExpandBtn" onclick="toggleDestExpand()" style="display:none"></button>
     <div class="custom-email-row" id="customEmailRow" style="display:none">
-      <label>Email destinatario</label>
+      <label>Email destinatario <span class="label-note">(per Altro)</span></label>
       <input type="email" id="customEmail" placeholder="ufficio@comune.it" oninput="onCustomEmailInput()">
       <div class="field-error" id="customEmail-error">Inserisci un indirizzo email valido.</div>
+    </div>
+    <div class="custom-email-row" id="customCatRow" style="display:none">
+      <label>Categoria del problema <span class="label-note">(non presente nell'elenco)</span></label>
+      <input type="text" id="customCat" placeholder="Es: Vandalismi, Infiltrazioni, Allagamento…" oninput="clearFieldError('customCat')">
+      <div class="field-error" id="customCat-error">Descrivi brevemente la categoria del problema.</div>
     </div>
     <div class="field-error" id="dest-error">⚠️ Seleziona un destinatario PA oppure almeno un canale social.</div>
   </section>
