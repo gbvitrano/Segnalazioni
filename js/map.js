@@ -97,6 +97,33 @@ function initMap() {
     }
   });
   new HomeControl().addTo(map);
+
+  // Legenda urgenza come controllo Leaflet (bottomleft)
+  const LegendControl = L.Control.extend({
+    options: { position: 'bottomleft' },
+    onAdd() {
+      const div = L.DomUtil.create('div', 'legend');
+      div.innerHTML =
+        '<div class="legend-title">Urgenza</div>' +
+        '<div class="legend-row"><div class="legend-dot" style="background:#e53535"></div> Alta</div>' +
+        '<div class="legend-row"><div class="legend-dot" style="background:#ff9900"></div> Normale</div>' +
+        '<div class="legend-row"><div class="legend-dot" style="background:#3cb4d8"></div> Bassa</div>';
+      L.DomEvent.disableClickPropagation(div);
+      return div;
+    }
+  });
+  new LegendControl().addTo(map);
+
+  // Credits / logo — Leaflet-Control-Credits (L.controlCredits)
+  L.controlCredits({
+    position:      'bottomright',
+    imageurl:      'img/favicon.png',
+    imagealt:      'SegnalaOra — OpenDataSicilia',
+    tooltip:       'SegnalaOra — OpenDataSicilia',
+    width:         '58px',
+    height:        '50px',
+    expandcontent: 'Web app civica<br/>by <a href="https://opendatasicilia.it" target="_blank" rel="noopener">@opendatasicilia</a>',
+  }).addTo(map);
 }
 
 function goHome() {

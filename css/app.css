@@ -1546,10 +1546,18 @@ body.page-map .loading-overlay {
 }
 body.page-map .loading-overlay p { font-size: 0.85rem; color: #8a7f70; }
 
+/* ── Leaflet Credits control — nessuno sfondo quando chiuso ── */
+body.page-map .leaflet-credits-control.leaflet-credits-control-collapsed {
+  background-color: transparent;
+  border-color: transparent;
+  opacity: 1;
+}
+body.page-map .leaflet-credits-control.leaflet-credits-control-collapsed button {
+  background-color: transparent;
+}
+
 /* ── Legenda ── */
 body.page-map .legend {
-  position: absolute;
-  bottom: 2rem; right: 1rem;
   background: white;
   border-radius: 10px;
   padding: 0.8rem 1rem;
