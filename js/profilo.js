@@ -11,7 +11,8 @@ const LS_EMAIL_KEY = 'segnalaora_email';
 
 // Stato filtri profilo
 let profiloAllReports = [];
-let profiloFilters    = { categoria: 'all', periodo: 'all' };
+let profiloFilters    = { periodo: 'all' };
+let pfActiveCats      = null;   // null = tutte; Set = solo queste
 
 // ─────────────────────────────────────────────
 //  INIT
@@ -187,24 +188,118 @@ function parseItalianDate(str) {
   return new Date(+parts[2], +parts[1] - 1, +parts[0]);
 }
 
-function populateCategoryOptions(reports) {
-  const sel = document.getElementById('pfCategoria');
-  if (!sel) return;
-  const cats = [...new Set(reports.map(r => r.categoria).filter(Boolean))].sort();
-  // Mantieni l'opzione "Tutte" e aggiungi le categorie uniche
-  sel.innerHTML = '<option value="all">Tutte le categorie</option>'
-    + cats.map(c => `<option value="${c.replace(/"/g,'&quot;')}">${c}</option>`).join('');
-  sel.value = profiloFilters.categoria;
+function buildPfCatPanel() {
+  const container = document.getElementById('pfCatChecks');
+  if (!container) return;
+
+  const cats = [...new Set(profiloAllReports.map(r => r.categoria).filter(Boolean))].sort();
+  container.innerHTML = '';
+
+  cats.forEach(cat => {
+    const div = document.createElement('div');
+    div.className = 'col-panel-option';
+    const sel     = pfActiveCats === null || pfActiveCats.has(cat);
+    div.innerHTML = `<span class="col-chk${sel ? ' checked' : ''}"></span>`
+                  + `<span class="col-opt-label${sel ? ' selected' : ''}">${cat}</span>`;
+    div.addEventListener('click', () => {
+      if (pfActiveCats === null) pfActiveCats = new Set(cats);
+      if (pfActiveCats.has(cat)) pfActiveCats.delete(cat);
+      else pfActiveCats.add(cat);
+      if (pfActiveCats.size === cats.length) pfActiveCats = null;
+      const isSel = pfActiveCats === null || pfActiveCats.has(cat);
+      div.querySelector('.col-chk').className       = 'col-chk'       + (isSel ? ' checked' : '');
+      div.querySelector('.col-opt-label').className = 'col-opt-label' + (isSel ? ' selected' : '');
+      syncPfCatCheckbox(cats);
+      updatePfFilterActiveBar();
+      applyProfiloFilters();
+    });
+    container.appendChild(div);
+  });
+
+  syncPfCatCheckbox(cats);
+}
+
+function syncPfCatCheckbox(cats) {
+  const total    = cats.length;
+  const selCount = pfActiveCats === null ? total : pfActiveCats.size;
+  const badge    = document.getElementById('pfCatDdBadge');
+  if (badge) badge.textContent = selCount;
+
+  const chk = document.getElementById('pfCatChkAll');
+  if (!chk) return;
+  const allSel  = pfActiveCats === null;
+  const noneSel = pfActiveCats !== null && pfActiveCats.size === 0;
+  chk.className = 'col-chk' + (allSel ? ' checked' : noneSel ? '' : ' indeterminate');
+  const lbl = document.querySelector('#pfCatOptAll .col-opt-label');
+  if (lbl) lbl.className = 'col-opt-label col-opt-all-label' + (allSel ? ' selected' : '');
+}
+
+function togglePfCatPanel() {
+  const panel   = document.getElementById('pfCatPanel');
+  const chevron = document.getElementById('pfCatPanelChevron');
+  const open    = panel.style.display === 'block';
+  panel.style.display = open ? 'none' : 'block';
+  chevron.className   = 'col-dd-chevron fa-solid ' + (open ? 'fa-chevron-down' : 'fa-chevron-up');
+}
+
+function toggleAllPfCatsClick() {
+  const cats   = [...document.querySelectorAll('#pfCatChecks .col-panel-option')]
+                   .map(d => d.querySelector('.col-opt-label').textContent);
+  pfActiveCats = pfActiveCats === null ? new Set() : null;
+  document.querySelectorAll('#pfCatChecks .col-panel-option').forEach(div => {
+    const sel = pfActiveCats === null;
+    div.querySelector('.col-chk').className       = 'col-chk'       + (sel ? ' checked' : '');
+    div.querySelector('.col-opt-label').className = 'col-opt-label' + (sel ? ' selected' : '');
+  });
+  syncPfCatCheckbox(cats);
+  updatePfFilterActiveBar();
+  applyProfiloFilters();
+}
+
+function clearPfCatFilter(e) {
+  e.stopPropagation();
+  pfActiveCats = null;
+  buildPfCatPanel();
+  updatePfFilterActiveBar();
+  applyProfiloFilters();
+}
+
+function updatePfFilterActiveBar() {
+  const bar  = document.getElementById('pfFilterActiveBar');
+  const text = document.getElementById('pfFilterActiveText');
+  if (!bar || !text) return;
+
+  const parts = [];
+  if (pfActiveCats !== null) {
+    parts.push('<strong>Categoria:</strong> '
+      + (pfActiveCats.size === 0 ? 'nessuna' : [...pfActiveCats].join(', ')));
+  }
+  const pSel = document.getElementById('pfPeriodo');
+  if (pSel && pSel.value !== 'all') {
+    const pLabels = { '7': 'Ultimi 7 giorni', '30': 'Ultimi 30 giorni', '90': 'Ultimi 90 giorni' };
+    parts.push('<strong>Periodo:</strong> ' + (pLabels[pSel.value] || pSel.value));
+  }
+  bar.style.display = parts.length ? 'flex' : 'none';
+  text.innerHTML    = parts.join(' &nbsp;·&nbsp; ');
+}
+
+function resetProfiloFilters() {
+  pfActiveCats       = null;
+  profiloFilters.periodo = 'all';
+  const pSel = document.getElementById('pfPeriodo');
+  if (pSel) pSel.value = 'all';
+  buildPfCatPanel();
+  updatePfFilterActiveBar();
+  applyProfiloFilters();
 }
 
 function applyProfiloFilters() {
-  profiloFilters.categoria = document.getElementById('pfCategoria')?.value || 'all';
-  profiloFilters.periodo   = document.getElementById('pfPeriodo')?.value   || 'all';
+  profiloFilters.periodo = document.getElementById('pfPeriodo')?.value || 'all';
 
   let filtered = profiloAllReports;
 
-  if (profiloFilters.categoria !== 'all') {
-    filtered = filtered.filter(r => r.categoria === profiloFilters.categoria);
+  if (pfActiveCats !== null) {
+    filtered = filtered.filter(r => pfActiveCats.has(r.categoria));
   }
 
   if (profiloFilters.periodo !== 'all') {
@@ -216,6 +311,8 @@ function applyProfiloFilters() {
       return d ? d >= cutoff : true;
     });
   }
+
+  updatePfFilterActiveBar();
 
   const list = document.getElementById('profileList');
   if (filtered.length === 0) {
@@ -229,20 +326,19 @@ function applyProfiloFilters() {
 //  RENDER LISTA
 // ─────────────────────────────────────────────
 function renderList(reports, header) {
-  // Salva sempre la lista completa per i filtri
   profiloAllReports = reports || [];
 
   // Mostra/nasconde la barra filtri
   const filterBar = document.getElementById('profiloFilters');
   if (filterBar) filterBar.style.display = reports && reports.length > 1 ? 'flex' : 'none';
 
-  // Popola le opzioni categoria
-  populateCategoryOptions(profiloAllReports);
+  // Costruisce il panel categorie (preserva selezione corrente)
+  buildPfCatPanel();
 
   // Applica filtri correnti
   let filtered = profiloAllReports;
-  if (profiloFilters.categoria !== 'all') {
-    filtered = filtered.filter(r => r.categoria === profiloFilters.categoria);
+  if (pfActiveCats !== null) {
+    filtered = filtered.filter(r => pfActiveCats.has(r.categoria));
   }
   if (profiloFilters.periodo !== 'all') {
     const days   = parseInt(profiloFilters.periodo);
@@ -483,4 +579,15 @@ function parseCSVLine(line) {
 }
 
 // ─────────────────────────────────────────────
+// Chiude il panel categorie al click fuori
+document.addEventListener('click', e => {
+  const dd = document.getElementById('pfCatDropdown');
+  if (dd && !dd.contains(e.target)) {
+    const panel   = document.getElementById('pfCatPanel');
+    const chevron = document.getElementById('pfCatPanelChevron');
+    if (panel)   panel.style.display = 'none';
+    if (chevron) chevron.className   = 'col-dd-chevron fa-solid fa-chevron-down';
+  }
+});
+
 init();

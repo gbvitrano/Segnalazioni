@@ -153,15 +153,35 @@
 
       <!-- Filtri categoria + periodo (sempre visibili) -->
       <div class="filters filters--extra" id="filtersExtra">
-        <select id="catFilter" class="app-select" onchange="setCatFilter(this.value)">
-          <option value="all">Tutte le categorie</option>
-        </select>
+        <div class="col-dropdown col-dropdown--down" id="catDropdown">
+          <div class="col-dropdown-trigger" onclick="toggleCatPanel()">
+            <span class="col-dd-badge" id="catDdBadge">0</span>
+            <span class="col-dd-label">Categorie</span>
+            <span class="col-dd-clear" onclick="clearCatFilter(event)" title="Tutte le categorie"><i class="fa-solid fa-xmark"></i></span>
+            <span class="col-dd-sep">|</span>
+            <i class="col-dd-chevron fa-solid fa-chevron-down" id="catPanelChevron"></i>
+          </div>
+          <div class="col-panel" id="catPanel" style="display:none">
+            <div class="col-panel-option col-panel-opt-all" id="catOptAll" onclick="toggleAllCatsClick()">
+              <span class="col-chk" id="catChkAll"></span>
+              <span class="col-opt-label col-opt-all-label">Seleziona tutte</span>
+            </div>
+            <div id="catChecks"></div>
+          </div>
+        </div>
         <select id="periodoFilter" class="app-select" onchange="setPeriodo(this.value)">
           <option value="all">Tutti i periodi</option>
           <option value="7">Ultimi 7 giorni</option>
           <option value="30">Ultimi 30 giorni</option>
           <option value="90">Ultimi 90 giorni</option>
         </select>
+      </div>
+
+      <!-- Barra filtri attivi -->
+      <div class="filter-active-bar" id="filterActiveBar" style="display:none">
+        <i class="fa-solid fa-filter"></i>
+        <span id="filterActiveText"></span>
+        <button class="filter-active-reset" onclick="resetFilters()"><i class="fa-solid fa-xmark"></i> Reset</button>
       </div>
 
       <!-- Ricerca indirizzo -->

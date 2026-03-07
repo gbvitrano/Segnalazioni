@@ -24,7 +24,8 @@ let filteredReports = [];
 let markers         = [];
 let markerById      = {};   // ID_Segnalazione → Leaflet marker
 let map;
-let activeFilters = { urgenza: 'all', stato: 'all', categoria: 'all', periodo: 'all' };
+let activeFilters = { urgenza: 'all', stato: 'all', periodo: 'all' };
+let activeCats    = null;   // null = tutte selezionate; Set = solo queste categorie
 let highlightedId = null;
 let viewMode      = 'aperte';   // 'aperte' | 'risolte'
 let _focusTimer   = null;       // timer per apertura popup da focusReport
@@ -280,33 +281,35 @@ function setFilter(type, val, el) {
   activeFilters[type] = val;
   el.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
+  updateFilterActiveBar();
   renderAll();
 }
 
 function resetFilters() {
-  activeFilters = { urgenza: 'all', stato: 'all', categoria: 'all', periodo: 'all' };
+  activeFilters = { urgenza: 'all', stato: 'all', periodo: 'all' };
+  activeCats    = null;
   document.querySelectorAll('.chip').forEach(c => {
     if (c.dataset.val === 'all') c.classList.add('active');
     else c.classList.remove('active');
   });
-  const catSel    = document.getElementById('catFilter');
   const periodoSel = document.getElementById('periodoFilter');
-  if (catSel)    catSel.value    = 'all';
   if (periodoSel) periodoSel.value = 'all';
+  renderCategoryChips();   // ricostruisce il panel con tutte checked
+  updateFilterActiveBar();
   renderAll();
 }
 
 function setPeriodo(val) {
   activeFilters.periodo = val;
+  updateFilterActiveBar();
   renderAll();
 }
 
 function setViewMode(mode) {
   viewMode = mode;
-  // Reset filtri stato/urgenza (specifici per modalità)
-  activeFilters.urgenza   = 'all';
-  activeFilters.stato     = 'all';
-  activeFilters.categoria = 'all';
+  activeFilters.urgenza = 'all';
+  activeFilters.stato   = 'all';
+  activeCats            = null;
   document.getElementById('tabAperte').classList.toggle('active', mode === 'aperte');
   document.getElementById('tabRisolte').classList.toggle('active', mode === 'risolte');
   document.getElementById('tabRisolte').classList.toggle('active-resolved', mode === 'risolte');
@@ -338,27 +341,121 @@ function applyFilters() {
       if (activeFilters.urgenza !== 'all' && r.Urgenza !== activeFilters.urgenza) return false;
       if (activeFilters.stato   !== 'all' && r.Stato   !== activeFilters.stato)   return false;
     }
-    if (activeFilters.categoria !== 'all' && r.Categoria !== activeFilters.categoria) return false;
+    if (activeCats !== null && !activeCats.has(r.Categoria)) return false;
     if (!isInPeriod(r.Data, activeFilters.periodo)) return false;
     return true;
   });
 }
 
+// ─────────────────────────────────────────────────────────
+//  DROPDOWN MULTI-SELECT CATEGORIA
+// ─────────────────────────────────────────────────────────
 function renderCategoryChips() {
-  const sel = document.getElementById('catFilter');
-  if (!sel) return;
+  const container = document.getElementById('catChecks');
+  if (!container) return;
 
-  // Raccoglie categorie uniche presenti nei dati caricati
   const cats = [...new Set(allReports.map(r => r.Categoria).filter(Boolean))].sort();
-  const current = activeFilters.categoria;
+  container.innerHTML = '';
 
-  sel.innerHTML = `<option value="all">Tutte le categorie</option>`
-    + cats.map(c => `<option value="${c.replace(/"/g,'&quot;')}"${c === current ? ' selected' : ''}>${c}</option>`).join('');
+  cats.forEach(cat => {
+    const div = document.createElement('div');
+    div.className  = 'col-panel-option';
+    const sel      = activeCats === null || activeCats.has(cat);
+    div.innerHTML  = `<span class="col-chk${sel ? ' checked' : ''}"></span>`
+                   + `<span class="col-opt-label${sel ? ' selected' : ''}">${cat}</span>`;
+    div.addEventListener('click', () => {
+      if (activeCats === null) activeCats = new Set(cats);  // da "tutte" a selettivo
+      if (activeCats.has(cat)) activeCats.delete(cat);
+      else activeCats.add(cat);
+      if (activeCats.size === cats.length) activeCats = null; // tutte selezionate → reset
+      const isSel = activeCats === null || activeCats.has(cat);
+      div.querySelector('.col-chk').className       = 'col-chk'       + (isSel ? ' checked' : '');
+      div.querySelector('.col-opt-label').className = 'col-opt-label' + (isSel ? ' selected' : '');
+      syncCatCheckbox(cats);
+      updateFilterActiveBar();
+      renderAll();
+    });
+    container.appendChild(div);
+  });
+
+  syncCatCheckbox(cats);
 }
 
-function setCatFilter(val) {
-  activeFilters.categoria = val;
+function syncCatCheckbox(cats) {
+  const total   = cats.length;
+  const selCount = activeCats === null ? total : activeCats.size;
+  const badge    = document.getElementById('catDdBadge');
+  if (badge) badge.textContent = selCount;
+
+  const chk = document.getElementById('catChkAll');
+  if (!chk) return;
+  const allSel  = activeCats === null;
+  const noneSel = activeCats !== null && activeCats.size === 0;
+  chk.className = 'col-chk' + (allSel ? ' checked' : noneSel ? '' : ' indeterminate');
+  const lbl = document.querySelector('#catOptAll .col-opt-label');
+  if (lbl) lbl.className = 'col-opt-label col-opt-all-label' + (allSel ? ' selected' : '');
+}
+
+function toggleCatPanel() {
+  const panel   = document.getElementById('catPanel');
+  const chevron = document.getElementById('catPanelChevron');
+  const open    = panel.style.display === 'block';
+  panel.style.display = open ? 'none' : 'block';
+  chevron.className   = 'col-dd-chevron fa-solid ' + (open ? 'fa-chevron-down' : 'fa-chevron-up');
+}
+
+function toggleAllCatsClick() {
+  const cats   = [...document.querySelectorAll('#catChecks .col-panel-option')]
+                   .map(d => d.querySelector('.col-opt-label').textContent);
+  const allSel = activeCats === null;
+  if (allSel) {
+    activeCats = new Set();   // deseleziona tutte
+  } else {
+    activeCats = null;        // seleziona tutte
+  }
+  document.querySelectorAll('#catChecks .col-panel-option').forEach(div => {
+    const sel = activeCats === null;
+    div.querySelector('.col-chk').className       = 'col-chk'       + (sel ? ' checked' : '');
+    div.querySelector('.col-opt-label').className = 'col-opt-label' + (sel ? ' selected' : '');
+  });
+  syncCatCheckbox(cats);
+  updateFilterActiveBar();
   renderAll();
+}
+
+function clearCatFilter(e) {
+  e.stopPropagation();
+  activeCats = null;
+  renderCategoryChips();
+  updateFilterActiveBar();
+  renderAll();
+}
+
+function updateFilterActiveBar() {
+  const bar  = document.getElementById('filterActiveBar');
+  const text = document.getElementById('filterActiveText');
+  if (!bar || !text) return;
+
+  const parts = [];
+
+  if (activeCats !== null) {
+    if (activeCats.size === 0) {
+      parts.push('<strong>Categoria:</strong> nessuna');
+    } else {
+      parts.push('<strong>Categoria:</strong> ' + [...activeCats].join(', '));
+    }
+  }
+
+  const pSel = document.getElementById('periodoFilter');
+  if (pSel && pSel.value !== 'all') {
+    const pLabels = { '7': 'Ultimi 7 giorni', '30': 'Ultimi 30 giorni', '90': 'Ultimi 90 giorni' };
+    parts.push('<strong>Periodo:</strong> ' + (pLabels[pSel.value] || pSel.value));
+  }
+  if (activeFilters.urgenza !== 'all') parts.push('<strong>Urgenza:</strong> ' + activeFilters.urgenza);
+  if (activeFilters.stato   !== 'all') parts.push('<strong>Stato:</strong> '   + activeFilters.stato);
+
+  bar.style.display  = parts.length ? 'flex' : 'none';
+  text.innerHTML     = parts.join(' &nbsp;·&nbsp; ');
 }
 
 // ─────────────────────────────────────────────────────────
@@ -739,8 +836,21 @@ initMap();
 loadData();
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeResolve(); closeLightbox(); }
+  if (e.key === 'Escape') { closeResolve(); closeLightbox(); closeCatPanel(); }
 });
+
+// Chiude il panel categorie al click fuori dal dropdown
+document.addEventListener('click', e => {
+  const dd = document.getElementById('catDropdown');
+  if (dd && !dd.contains(e.target)) closeCatPanel();
+});
+
+function closeCatPanel() {
+  const panel   = document.getElementById('catPanel');
+  const chevron = document.getElementById('catPanelChevron');
+  if (panel)   panel.style.display = 'none';
+  if (chevron) chevron.className   = 'col-dd-chevron fa-solid fa-chevron-down';
+}
 
 // Rileva ?risolvi=TOKEN nell'URL e apre il modal automaticamente
 const _urlId = new URLSearchParams(location.search).get('risolvi');

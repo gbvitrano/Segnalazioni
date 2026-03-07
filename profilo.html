@@ -57,15 +57,35 @@
 
   <!-- Filtri rapidi (visibili solo quando ci sono segnalazioni) -->
   <div class="profilo-filters" id="profiloFilters" style="display:none">
-    <select id="pfCategoria" class="app-select" onchange="applyProfiloFilters()">
-      <option value="all">Tutte le categorie</option>
-    </select>
+    <div class="col-dropdown col-dropdown--down" id="pfCatDropdown">
+      <div class="col-dropdown-trigger" onclick="togglePfCatPanel()">
+        <span class="col-dd-badge" id="pfCatDdBadge">0</span>
+        <span class="col-dd-label">Categorie</span>
+        <span class="col-dd-clear" onclick="clearPfCatFilter(event)" title="Tutte le categorie"><i class="fa-solid fa-xmark"></i></span>
+        <span class="col-dd-sep">|</span>
+        <i class="col-dd-chevron fa-solid fa-chevron-down" id="pfCatPanelChevron"></i>
+      </div>
+      <div class="col-panel" id="pfCatPanel" style="display:none">
+        <div class="col-panel-option col-panel-opt-all" id="pfCatOptAll" onclick="toggleAllPfCatsClick()">
+          <span class="col-chk" id="pfCatChkAll"></span>
+          <span class="col-opt-label col-opt-all-label">Seleziona tutte</span>
+        </div>
+        <div id="pfCatChecks"></div>
+      </div>
+    </div>
     <select id="pfPeriodo" class="app-select" onchange="applyProfiloFilters()">
       <option value="all">Tutti i periodi</option>
       <option value="7">Ultimi 7 giorni</option>
       <option value="30">Ultimi 30 giorni</option>
       <option value="90">Ultimi 90 giorni</option>
     </select>
+  </div>
+
+  <!-- Barra filtri attivi profilo -->
+  <div class="filter-active-bar" id="pfFilterActiveBar" style="display:none">
+    <i class="fa-solid fa-filter"></i>
+    <span id="pfFilterActiveText"></span>
+    <button class="filter-active-reset" onclick="resetProfiloFilters()"><i class="fa-solid fa-xmark"></i> Reset</button>
   </div>
 
   <!-- Lista segnalazioni -->
