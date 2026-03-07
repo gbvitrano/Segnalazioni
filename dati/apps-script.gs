@@ -354,7 +354,33 @@ function buildEmailSegnalante(data, mittente) {
     + '</div></div></body></html>';
 }
 
-function doGet() {
+function doGet(e) {
+  const params = (e && e.parameter) || {};
+
+  // ─── Ping registro utilizzi ────────────────────────────────────
+  // Ricevuto da istanze fork che caricano la mappa pubblica.
+  // Scrive host + timestamp nel foglio "Utilizzi" dello stesso Sheet.
+  if (params.action === 'ping') {
+    const host = (params.host || 'sconosciuto').slice(0, 200);
+    try {
+      const ss   = SpreadsheetApp.openById(SHEET_ID);
+      let sheet  = ss.getSheetByName('Utilizzi');
+      if (!sheet) {
+        sheet = ss.insertSheet('Utilizzi');
+        sheet.appendRow(['Timestamp', 'Host']);
+        const h = sheet.getRange(1, 1, 1, 2);
+        h.setFontWeight('bold');
+        h.setBackground('#1a1208');
+        h.setFontColor('#f5f0e8');
+      }
+      const now = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'dd/MM/yyyy HH:mm:ss');
+      sheet.appendRow([now, host]);
+    } catch(err) {}
+    return ContentService
+      .createTextOutput(JSON.stringify({ ok: true }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
   return ContentService
     .createTextOutput(JSON.stringify({ ok: true, service: 'SegnalaOra', status: 'attivo' }))
     .setMimeType(ContentService.MimeType.JSON);

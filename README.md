@@ -196,3 +196,16 @@ Sviluppo tecnico: Web app progettata e sviluppata da [**@gbvitrano**](https://ww
 
 <img width="430" height="932" alt="2026-03-06_15h47_51" src="https://github.com/user-attachments/assets/d0740be9-4fd8-430e-a6e4-3c8c4ae0f017" /> <img width="430" height="932" alt="2026-03-06_15h47_42" src="https://github.com/user-attachments/assets/45818975-3a87-4066-81ec-e1c18612442b" /> <img width="430" height="932" alt="2026-03-06_15h48_09" src="https://github.com/user-attachments/assets/34e4cd8e-3bd7-4c65-ab20-3bc6a6e56cd9" />
 <img width="430" height="932" alt="2026-03-06_15h48_22" src="https://github.com/user-attachments/assets/1119e6a2-48ec-4e12-b099-52e2f95222bb" /> <img width="430" height="932" alt="2026-03-06_15h48_29" src="https://github.com/user-attachments/assets/091e4e4d-7f17-439c-aab4-161061ab1e9b" />
+
+---
+
+[![GitHub stars](https://img.shields.io/github/stars/gbvitrano/Segnalazioni?style=flat&logo=github&label=stars)](https://github.com/gbvitrano/Segnalazioni/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/gbvitrano/Segnalazioni?style=flat&logo=github&label=forks)](https://github.com/gbvitrano/Segnalazioni/forks)
+[![GitHub last commit](https://img.shields.io/github/last-commit/gbvitrano/Segnalazioni?style=flat&label=ultimo%20aggiornamento)](https://github.com/gbvitrano/Segnalazioni/commits/master)
+[![Sync CSV](https://img.shields.io/github/actions/workflow/status/gbvitrano/Segnalazioni/sync-sheets.yml?style=flat&label=sync%20CSV)](https://github.com/gbvitrano/Segnalazioni/actions/workflows/sync-sheets.yml)
+[![License: CC BY 4.0](https://img.shields.io/badge/license-CC%20BY%204.0-lightgrey?style=flat)](https://creativecommons.org/licenses/by/4.0/deed.it)
+
+[![GitHub Pages](https://img.shields.io/badge/hosted-GitHub%20Pages-blue?style=flat&logo=github)](https://gbvitrano.github.io/Segnalazioni/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?style=flat&logo=javascript&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Leaflet](https://img.shields.io/badge/Leaflet-1.9.4-green?style=flat&logo=leaflet)](https://leafletjs.com/)
+[![Chart.js](https://img.shields.io/badge/Chart.js-4.4-pink?style=flat&logo=chart.js)](https://www.chartjs.org/)

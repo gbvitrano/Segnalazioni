@@ -8,6 +8,15 @@
 // ─────────────────────────────────────────────────────────
 
 // ─────────────────────────────────────────────────────────
+//  REGISTRO UTILIZZI (progetto originale)
+//  Invia l'hostname di questa istanza all'autore del progetto
+//  una volta al giorno per browser, tramite il foglio "Utilizzi".
+//  Per non partecipare: lascia SEGNALAORA_REGISTRY_URL vuoto
+//  oppure rimuovi questo blocco.
+// ─────────────────────────────────────────────────────────
+const SEGNALAORA_REGISTRY_URL = '';   // ← incolla qui l'URL /exec del tuo Apps Script
+
+// ─────────────────────────────────────────────────────────
 //  STATO
 // ─────────────────────────────────────────────────────────
 let allReports      = [];
@@ -650,3 +659,17 @@ document.addEventListener('keydown', e => {
 // Rileva ?risolvi=TOKEN nell'URL e apre il modal automaticamente
 const _urlId = new URLSearchParams(location.search).get('risolvi');
 if (_urlId) openResolve(_urlId);
+
+// ─────────────────────────────────────────────────────────
+//  PING REGISTRO UTILIZZI — una volta al giorno per browser
+// ─────────────────────────────────────────────────────────
+(function pingRegistry() {
+  if (!SEGNALAORA_REGISTRY_URL) return;
+  const h = location.hostname;
+  if (!h || h === 'localhost' || h === '127.0.0.1') return;
+  const key   = 'segnalaora_ping';
+  const today = new Date().toDateString();
+  if (localStorage.getItem(key) === today) return;
+  localStorage.setItem(key, today);
+  fetch(SEGNALAORA_REGISTRY_URL + '?action=ping&host=' + encodeURIComponent(h), { mode: 'no-cors' });
+})();
