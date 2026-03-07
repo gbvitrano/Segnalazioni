@@ -117,7 +117,7 @@ function mergeIntoLocal(newReports) {
   return existing;
 }
 
-// Recupera segnalazioni per email dai CSV pubblici, le merge e aggiorna la UI
+// Recupera segnalazioni per email tramite Apps Script, le merge e aggiorna la UI
 async function syncFromEmail(email, showFeedback) {
   if (showFeedback) {
     const btn = document.getElementById('searchBtn');
@@ -125,16 +125,15 @@ async function syncFromEmail(email, showFeedback) {
   }
 
   try {
-    const bust = (u) => u + (u.includes('?') ? '&' : '?') + 't=' + Date.now();
-    const [t1, t2] = await Promise.all([
-      fetch(bust(SHEETS_CSV_APERTE)).then(r => r.text()).catch(() => ''),
-      fetch(bust(SHEETS_CSV_RISOLTE)).then(r => r.text()).catch(() => ''),
-    ]);
-    const allRows = [...parseCSV(t1), ...parseCSV(t2)];
-    const rows = allRows.filter(r => (r.Email_Segnalante || '').trim().toLowerCase() === email.toLowerCase());
+    const url  = APPS_SCRIPT_URL + '?action=cerca&email=' + encodeURIComponent(email) + '&t=' + Date.now();
+    const resp = await fetch(url);
+    const json = await resp.json();
 
+    if (!json.ok) throw new Error(json.error || 'Errore server');
+
+    const rows = json.data || [];
     const converted = rows.map(r => ({
-      ticketId:  r.ID_Segnalazione || r.Timestamp_UTC || (r.Data + 'T' + r.Ora + '_' + r.Categoria),
+      ticketId:  r.ID_Segnalazione,
       categoria: r.Categoria,
       catEmoji:  r.Categoria_Emoji,
       indirizzo: r.Via || r.Indirizzo_Completo,

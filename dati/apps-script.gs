@@ -357,6 +357,55 @@ function buildEmailSegnalante(data, mittente) {
 function doGet(e) {
   const params = (e && e.parameter) || {};
 
+  // ─── Cerca segnalazioni per email ─────────────────────────────
+  if (params.action === 'cerca' && params.email) {
+    const email = params.email.toLowerCase().trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return ContentService
+        .createTextOutput(JSON.stringify({ ok: false, error: 'Email non valida' }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+    try {
+      const ss    = SpreadsheetApp.openById(SHEET_ID);
+      const sheet = ss.getSheetByName(SHEET_NAME);
+      if (!sheet || sheet.getLastRow() < 2) {
+        return ContentService
+          .createTextOutput(JSON.stringify({ ok: true, data: [] }))
+          .setMimeType(ContentService.MimeType.JSON);
+      }
+      const headers  = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+      const emailIdx = headers.indexOf('Email_Segnalante');
+      if (emailIdx === -1) {
+        return ContentService
+          .createTextOutput(JSON.stringify({ ok: true, data: [] }))
+          .setMimeType(ContentService.MimeType.JSON);
+      }
+      const SAFE_COLS = [
+        'ID_Segnalazione','Data','Ora','Categoria','Categoria_Emoji',
+        'Urgenza','Via','Indirizzo_Completo','Stato','Nome_Segnalante','Token_Risoluzione'
+      ];
+      const safeIdx = SAFE_COLS.map(function(c) { return headers.indexOf(c); });
+      const allRows = sheet.getRange(2, 1, sheet.getLastRow() - 1, sheet.getLastColumn()).getValues();
+      const results = [];
+      allRows.forEach(function(row) {
+        if ((row[emailIdx] || '').toString().toLowerCase().trim() === email) {
+          const obj = {};
+          SAFE_COLS.forEach(function(col, i) {
+            obj[col] = safeIdx[i] >= 0 ? (row[safeIdx[i]] !== undefined ? row[safeIdx[i]].toString() : '') : '';
+          });
+          results.push(obj);
+        }
+      });
+      return ContentService
+        .createTextOutput(JSON.stringify({ ok: true, data: results }))
+        .setMimeType(ContentService.MimeType.JSON);
+    } catch(err) {
+      return ContentService
+        .createTextOutput(JSON.stringify({ ok: false, error: err.message }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+
   // ─── Ping registro utilizzi ────────────────────────────────────
   // Ricevuto da istanze fork che caricano la mappa pubblica.
   // Scrive host + timestamp nel foglio "Utilizzi" dello stesso Sheet.
