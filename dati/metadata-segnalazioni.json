@@ -1,0 +1,358 @@
+{
+  "titolo": "SegnalaOra — Metadati dataset segnalazioni civiche",
+  "descrizione": "Descrizione dei campi del dataset CSV esportabile dalla pagina Statistiche di SegnalaOra. I dati rappresentano segnalazioni civiche georeferenziate inviate dai cittadini.",
+  "licenza": "CC BY 4.0 — Attribuzione richiesta",
+  "autore": "Giovan Battista Vitrano per OpenDataSicilia.it",
+  "fonte": "Google Sheets (foglio 'Segnalazioni' + foglio 'Risolte'), sincronizzati via GitHub Actions ogni 30 minuti",
+  "formato_export": "CSV UTF-8 con BOM, separatore virgola",
+  "ultima_revisione": "2026-03-07",
+  "campi": [
+    {
+      "nome": "Foglio",
+      "etichetta": "Foglio di origine",
+      "tipo": "stringa",
+      "descrizione": "Indica il foglio Google Sheets di provenienza della riga. 'Segnalazioni' = pratica ancora aperta o in lavorazione; 'Risolte' = pratica chiusa/risolta.",
+      "valori_possibili": ["Segnalazioni", "Risolte"],
+      "esempio": "Segnalazioni",
+      "note": "Colonna virtuale aggiunta in fase di esportazione, non presente nel CSV sorgente."
+    },
+    {
+      "nome": "ID_Segnalazione",
+      "etichetta": "Identificatore univoco",
+      "tipo": "stringa",
+      "descrizione": "Codice univoco assegnato automaticamente ad ogni segnalazione al momento dell'invio. Formato: SGN- seguito dal timestamp Unix in millisecondi.",
+      "valori_possibili": null,
+      "esempio": "SGN-1748291234567",
+      "note": "Utile per fare join tra dataset diversi o per tracciare l'evoluzione nel tempo di una singola segnalazione."
+    },
+    {
+      "nome": "Timestamp_UTC",
+      "etichetta": "Data e ora invio (UTC)",
+      "tipo": "stringa (ISO 8601)",
+      "descrizione": "Data e ora esatta dell'invio della segnalazione, espressa in formato ISO 8601 con fuso orario UTC.",
+      "valori_possibili": null,
+      "esempio": "2025-05-26T10:30:00Z",
+      "note": "Per l'ora locale italiana aggiungere +1h (ora solare) o +2h (ora legale)."
+    },
+    {
+      "nome": "Data",
+      "etichetta": "Data segnalazione",
+      "tipo": "stringa (GG/MM/AAAA)",
+      "descrizione": "Data di invio della segnalazione in formato italiano giorno/mese/anno.",
+      "valori_possibili": null,
+      "esempio": "26/05/2025",
+      "note": "Usato per i grafici 'Andamento nel tempo'. Preferire Timestamp_UTC per elaborazioni temporali precise."
+    },
+    {
+      "nome": "Ora",
+      "etichetta": "Ora segnalazione",
+      "tipo": "stringa (HH:MM)",
+      "descrizione": "Ora locale di invio della segnalazione in formato 24h.",
+      "valori_possibili": null,
+      "esempio": "10:30",
+      "note": null
+    },
+    {
+      "nome": "Categoria",
+      "etichetta": "Categoria problema",
+      "tipo": "stringa (enumerata)",
+      "descrizione": "Tipologia del problema segnalato, scelta dal cittadino tra le categorie predefinite.",
+      "valori_possibili": [
+        "Buche e dissesti stradali",
+        "Illuminazione pubblica guasta",
+        "Rifiuti abbandonati",
+        "Alberi e verde pubblico",
+        "Perdite idriche",
+        "Deiezioni non raccolte",
+        "Segnaletica danneggiata",
+        "Immobile pericolante",
+        "Barriere architettoniche",
+        "Inquinamento acustico",
+        "Veicoli abbandonati",
+        "Degrado e sicurezza",
+        "Altro"
+      ],
+      "esempio": "Buche e dissesti stradali",
+      "note": null
+    },
+    {
+      "nome": "Categoria_Emoji",
+      "etichetta": "Emoji categoria",
+      "tipo": "stringa (carattere unicode)",
+      "descrizione": "Simbolo emoji associato alla categoria, usato nelle notifiche e nei messaggi condivisi.",
+      "valori_possibili": null,
+      "esempio": "\uD83D\uDD73\uFE0F",
+      "note": "Può non essere visualizzato correttamente in tutti i programmi di foglio di calcolo."
+    },
+    {
+      "nome": "Urgenza",
+      "etichetta": "Livello di urgenza",
+      "tipo": "stringa (enumerata)",
+      "descrizione": "Livello di urgenza indicato dal segnalante per descrivere la gravita' o il pericolo del problema.",
+      "valori_possibili": ["Alta", "Normale", "Bassa"],
+      "esempio": "Alta",
+      "note": "Il valore 'Alta' indica situazioni di potenziale pericolo immediato per persone o cose."
+    },
+    {
+      "nome": "Descrizione",
+      "etichetta": "Descrizione libera",
+      "tipo": "stringa (testo libero)",
+      "descrizione": "Testo descrittivo inserito dal cittadino per fornire dettagli aggiuntivi sul problema.",
+      "valori_possibili": null,
+      "esempio": "Buca profonda circa 30cm all'incrocio con Via Roma. Pericolosa per bici e motorini.",
+      "note": "Campo a testo libero, non normalizzato. Puo' contenere informazioni sensibili."
+    },
+    {
+      "nome": "Nome_Segnalante",
+      "etichetta": "Nome del segnalante",
+      "tipo": "stringa",
+      "descrizione": "Nome (e cognome, se fornito) del cittadino che ha inviato la segnalazione.",
+      "valori_possibili": null,
+      "esempio": "Mario Rossi",
+      "note": "DATO PERSONALE — trattato ai sensi del GDPR. Nei CSV pubblici potrebbe essere anonimizzato o assente."
+    },
+    {
+      "nome": "Email_Segnalante",
+      "etichetta": "Email del segnalante",
+      "tipo": "stringa (indirizzo email)",
+      "descrizione": "Indirizzo email fornito dal segnalante per eventuali comunicazioni di aggiornamento.",
+      "valori_possibili": null,
+      "esempio": "mario@esempio.it",
+      "note": "DATO PERSONALE — trattato ai sensi del GDPR. Nei CSV pubblici questo campo e' generalmente omesso o mascherato."
+    },
+    {
+      "nome": "Lat",
+      "etichetta": "Latitudine",
+      "tipo": "numero decimale (WGS84)",
+      "descrizione": "Coordinata geografica di latitudine del luogo segnalato, nel sistema di riferimento WGS84 (lo stesso di Google Maps e GPS).",
+      "valori_possibili": null,
+      "esempio": "38.115556",
+      "note": "Separatore decimale: punto. Precisione tipica: 5-6 decimali (~1-10 metri). Obbligatoria per la visualizzazione in mappa."
+    },
+    {
+      "nome": "Long",
+      "etichetta": "Longitudine",
+      "tipo": "numero decimale (WGS84)",
+      "descrizione": "Coordinata geografica di longitudine del luogo segnalato, nel sistema di riferimento WGS84.",
+      "valori_possibili": null,
+      "esempio": "13.361389",
+      "note": "Separatore decimale: punto. Attenzione: il campo si chiama 'Long' (non 'Longitudine')."
+    },
+    {
+      "nome": "Indirizzo_Completo",
+      "etichetta": "Indirizzo completo",
+      "tipo": "stringa",
+      "descrizione": "Indirizzo postale completo del luogo segnalato, ottenuto tramite reverse geocoding (OpenStreetMap Nominatim) dalle coordinate GPS.",
+      "valori_possibili": null,
+      "esempio": "Via Maqueda 100, 90134 Palermo PA",
+      "note": "Generato automaticamente. Puo' differire leggermente dall'indirizzo effettivo in zone con copertura cartografica limitata."
+    },
+    {
+      "nome": "Via",
+      "etichetta": "Nome via / strada",
+      "tipo": "stringa",
+      "descrizione": "Componente del nome della via o strada estratta dall'indirizzo completo.",
+      "valori_possibili": null,
+      "esempio": "Via Maqueda",
+      "note": null
+    },
+    {
+      "nome": "Numero_Civico",
+      "etichetta": "Numero civico",
+      "tipo": "stringa",
+      "descrizione": "Numero civico estratto dall'indirizzo completo. Puo' essere vuoto se non disponibile.",
+      "valori_possibili": null,
+      "esempio": "100",
+      "note": null
+    },
+    {
+      "nome": "CAP",
+      "etichetta": "Codice avviamento postale",
+      "tipo": "stringa (5 cifre)",
+      "descrizione": "Codice postale (CAP) della localita' segnalata.",
+      "valori_possibili": null,
+      "esempio": "90134",
+      "note": "Estratto dal reverse geocoding. Puo' essere vuoto se Nominatim non lo restituisce."
+    },
+    {
+      "nome": "Comune",
+      "etichetta": "Comune",
+      "tipo": "stringa",
+      "descrizione": "Nome del comune in cui ricade il luogo segnalato.",
+      "valori_possibili": null,
+      "esempio": "Palermo",
+      "note": null
+    },
+    {
+      "nome": "Provincia",
+      "etichetta": "Sigla provincia",
+      "tipo": "stringa (2 caratteri)",
+      "descrizione": "Sigla della provincia italiana in cui ricade il comune.",
+      "valori_possibili": null,
+      "esempio": "PA",
+      "note": null
+    },
+    {
+      "nome": "Regione",
+      "etichetta": "Regione",
+      "tipo": "stringa",
+      "descrizione": "Nome della regione italiana in cui ricade il comune.",
+      "valori_possibili": null,
+      "esempio": "Sicilia",
+      "note": null
+    },
+    {
+      "nome": "Fonte_Posizione",
+      "etichetta": "Fonte della posizione",
+      "tipo": "stringa (enumerata)",
+      "descrizione": "Indica come e' stata rilevata la posizione geografica della segnalazione.",
+      "valori_possibili": ["GPS", "EXIF", "Manuale"],
+      "esempio": "GPS",
+      "note": "'EXIF' = coordinate estratte dai metadati della foto scattata; 'GPS' = posizione del dispositivo al momento della segnalazione; 'Manuale' = posizione selezionata dall'utente sulla mappa."
+    },
+    {
+      "nome": "Accuratezza_GPS_m",
+      "etichetta": "Accuratezza GPS (metri)",
+      "tipo": "numero intero",
+      "descrizione": "Raggio di accuratezza in metri della posizione GPS rilevata dal dispositivo. Valori bassi indicano maggiore precisione.",
+      "valori_possibili": null,
+      "esempio": "5",
+      "note": "Disponibile solo quando Fonte_Posizione = 'GPS'. Vuoto per posizioni EXIF o Manuali. Campo non incluso nell'export pubblico."
+    },
+    {
+      "nome": "Destinatari",
+      "etichetta": "Enti destinatari",
+      "tipo": "stringa (lista separata da punto e virgola)",
+      "descrizione": "Elenco degli enti o uffici a cui e' stata inviata la segnalazione, separati da punto e virgola.",
+      "valori_possibili": null,
+      "esempio": "Comune;Polizia Locale",
+      "note": "Gli enti disponibili dipendono dalla configurazione del comune che ha attivato SegnalaOra."
+    },
+    {
+      "nome": "Canale_Email",
+      "etichetta": "Inviato via email",
+      "tipo": "stringa (booleano testuale)",
+      "descrizione": "Indica se la segnalazione e' stata inviata tramite il canale email.",
+      "valori_possibili": ["Si'", "No"],
+      "esempio": "Si'",
+      "note": null
+    },
+    {
+      "nome": "Canale_WhatsApp",
+      "etichetta": "Inviato via WhatsApp",
+      "tipo": "stringa (booleano testuale)",
+      "descrizione": "Indica se la segnalazione e' stata condivisa tramite WhatsApp.",
+      "valori_possibili": ["Si'", "No"],
+      "esempio": "Si'",
+      "note": null
+    },
+    {
+      "nome": "Canale_Twitter",
+      "etichetta": "Inviato via X/Twitter",
+      "tipo": "stringa (booleano testuale)",
+      "descrizione": "Indica se la segnalazione e' stata pubblicata su X (ex Twitter).",
+      "valori_possibili": ["Si'", "No"],
+      "esempio": "No",
+      "note": null
+    },
+    {
+      "nome": "Canale_Facebook",
+      "etichetta": "Inviato via Facebook",
+      "tipo": "stringa (booleano testuale)",
+      "descrizione": "Indica se la segnalazione e' stata condivisa su Facebook.",
+      "valori_possibili": ["Si'", "No"],
+      "esempio": "No",
+      "note": null
+    },
+    {
+      "nome": "Ha_Immagine",
+      "etichetta": "Presenza foto allegata",
+      "tipo": "stringa (booleano testuale)",
+      "descrizione": "Indica se alla segnalazione e' stata allegata una fotografia.",
+      "valori_possibili": ["Si'", "No"],
+      "esempio": "Si'",
+      "note": "Campo non incluso nell'export pubblico per motivi di privacy."
+    },
+    {
+      "nome": "Dimensioni_Immagine",
+      "etichetta": "Dimensioni foto (pixel)",
+      "tipo": "stringa",
+      "descrizione": "Larghezza e altezza in pixel dell'immagine allegata, separate da 'x'. Le immagini vengono ridimensionate client-side a max 1280px.",
+      "valori_possibili": null,
+      "esempio": "1280x960",
+      "note": "Campo non incluso nell'export pubblico."
+    },
+    {
+      "nome": "Testo_Messaggio",
+      "etichetta": "Testo notifica inviata",
+      "tipo": "stringa (testo libero)",
+      "descrizione": "Testo preformattato del messaggio inviato agli enti, contenente un riepilogo strutturato della segnalazione con emoji.",
+      "valori_possibili": null,
+      "esempio": "Segnalazione Civica — URGENTE — Buche e dissesti stradali | Via Maqueda 100...",
+      "note": "Generato automaticamente dall'applicazione. Usato come corpo del messaggio email/WhatsApp."
+    },
+    {
+      "nome": "URL_Segnalazione",
+      "etichetta": "URL della segnalazione",
+      "tipo": "stringa (URL)",
+      "descrizione": "Indirizzo web della pagina pubblica SegnalaOra in cui la segnalazione e' visibile sulla mappa.",
+      "valori_possibili": null,
+      "esempio": "https://tuosito.github.io/Segnalazioni/",
+      "note": "Campo non incluso nell'export pubblico."
+    },
+    {
+      "nome": "Stato",
+      "etichetta": "Stato della pratica",
+      "tipo": "stringa (enumerata)",
+      "descrizione": "Stato corrente della segnalazione aggiornato dall'ufficio competente.",
+      "valori_possibili": ["Nuova", "In lavorazione", "Risolta", "Chiusa"],
+      "esempio": "Nuova",
+      "note": "Le segnalazioni con Stato 'Risolta' o 'Chiusa' vengono tipicamente spostate nel foglio 'Risolte'."
+    },
+    {
+      "nome": "Note_Ufficio",
+      "etichetta": "Note dell'ufficio",
+      "tipo": "stringa (testo libero)",
+      "descrizione": "Annotazioni inserite dall'operatore dell'ente per descrivere l'intervento effettuato o fornire aggiornamenti al cittadino.",
+      "valori_possibili": null,
+      "esempio": "Intervento programmato per la settimana del 02/06/2025.",
+      "note": "Compilato dall'operatore PA. Puo' essere vuoto se la segnalazione non e' ancora stata presa in carico."
+    },
+    {
+      "nome": "Operatore",
+      "etichetta": "Operatore assegnato",
+      "tipo": "stringa",
+      "descrizione": "Nome o identificativo dell'operatore o ufficio che ha preso in carico la segnalazione.",
+      "valori_possibili": null,
+      "esempio": "Ufficio Manutenzione Strade",
+      "note": "Compilato dall'operatore PA. Puo' essere vuoto."
+    },
+    {
+      "nome": "Data_Presa_Carico",
+      "etichetta": "Data presa in carico",
+      "tipo": "stringa (GG/MM/AAAA)",
+      "descrizione": "Data in cui l'ente ha formalmente preso in carico la segnalazione.",
+      "valori_possibili": null,
+      "esempio": "28/05/2025",
+      "note": "Compilato dall'operatore PA. Puo' essere vuoto."
+    },
+    {
+      "nome": "Data_Risoluzione",
+      "etichetta": "Data risoluzione",
+      "tipo": "stringa (GG/MM/AAAA)",
+      "descrizione": "Data in cui il problema e' stato risolto e la segnalazione e' stata chiusa.",
+      "valori_possibili": null,
+      "esempio": "05/06/2025",
+      "note": "Compilato dall'operatore PA. Vuoto per segnalazioni ancora aperte."
+    },
+    {
+      "nome": "Token_Risoluzione",
+      "etichetta": "Token di verifica risoluzione",
+      "tipo": "stringa (hash)",
+      "descrizione": "Codice univoco usato internamente per verificare l'autenticita' della chiusura della segnalazione tramite il link inviato al segnalante.",
+      "valori_possibili": null,
+      "esempio": "a3f9c2e1b8",
+      "note": "Dato tecnico interno. Nei CSV pubblici questo campo e' generalmente omesso."
+    }
+  ]
+}

@@ -691,6 +691,22 @@ function exportTableCSV() {
   URL.revokeObjectURL(url);
 }
 
+function exportTableJSON() {
+  const cols = _allCols.filter(c => _visibleCols.has(c));
+  const data = _allReports.map(r => {
+    const obj = {};
+    cols.forEach(col => { obj[col] = col === 'Foglio' ? r._foglio : (r[col] || ''); });
+    return obj;
+  });
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'segnalazioni.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 function csvEsc(val) {
   const s = String(val ?? '');
   return (s.includes(',') || s.includes('"') || s.includes('\n'))

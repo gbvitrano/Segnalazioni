@@ -131,9 +131,17 @@
       <span>Open Data</span>
     </div>
     <p class="opendata-desc">I dati sono pubblici e scaricabili liberamente. Esplora la tabella, seleziona le colonne e scarica il CSV.</p>
-    <button class="btn-table-toggle" id="btnTableToggle" onclick="toggleTable()">
-      <i class="fa-solid fa-table-list"></i> Tabella dati
-    </button>
+    <div class="opendata-actions">
+      <button class="btn-table-toggle" id="btnTableToggle" onclick="toggleTable()">
+        <i class="fa-solid fa-table-list"></i> Tabella dati
+      </button>
+      <a class="btn-metadata btn-metadata--csv" href="dati/metadata-segnalazioni.csv" download="metadata-segnalazioni.csv" title="Scarica i metadati del dataset (CSV — compatibile Excel)">
+        <i class="fa-solid fa-file-csv"></i> Metadati CSV
+      </a>
+      <a class="btn-metadata" href="dati/metadata-segnalazioni.json" download="metadata-segnalazioni.json" title="Scarica i metadati del dataset (JSON)">
+        <i class="fa-solid fa-file-code"></i> Metadati JSON
+      </a>
+    </div>
   </div>
 
   <!-- SEZIONE TABELLA -->
@@ -156,7 +164,10 @@
         </div>
       </div>
       <button class="btn-export-csv" onclick="exportTableCSV()">
-        <i class="fa-solid fa-file-arrow-down"></i> Esporta CSV
+        <i class="fa-solid fa-file-csv"></i> Esporta CSV
+      </button>
+      <button class="btn-export-json" onclick="exportTableJSON()">
+        <i class="fa-solid fa-file-code"></i> Esporta JSON
       </button>
     </div>
     <div class="table-wrap">
