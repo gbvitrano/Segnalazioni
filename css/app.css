@@ -687,13 +687,16 @@ body.page-form textarea { resize: vertical; min-height: 90px; }
 
 body.page-form .select-wrap { position: relative; }
 body.page-form .select-wrap::after {
-  content: '▾';
+  content: '';
   position: absolute;
   right: 1rem; top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
-  color: #8a7f70;
-  font-size: 0.9rem;
+  width: 15px;
+  height: 15px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpolyline points='112,184 256,328 400,184' fill='none' stroke='%237a6e60' stroke-width='48' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 body.page-form .field-error {
